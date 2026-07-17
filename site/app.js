@@ -186,7 +186,7 @@ async function loadAllSubsectionMarkdown() {
         fetches.push(
           fetch(path)
             .then(r => { if (!r.ok) throw new Error(); return r.text(); })
-            .then(text => { sub.rules = parseMarkdownRules(text); })
+            .then(text => { sub.rules = parseMarkdownRules(text.replace(/\r\n/g, '\n')); })
             .catch(() => { if (!sub.rules) sub.rules = []; })
         );
       }

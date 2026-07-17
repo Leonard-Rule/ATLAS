@@ -1,10 +1,11 @@
 {
-  "feedback": {
-    "email": ""
-  },
-  "github": {
-    "repo": "Leonard-Rule/ACHIAnalyticsHub",
+  "feedback": { "email": "" },
+  "tfs": {
+    "baseUrl": "http://vic-tfs:8080/tfs/ACHI/Research/_git/ATLAS",
+    "workItemsBase": "http://vic-tfs:8080/tfs/ACHI/Research",
+    "workItemType": "Issue",
     "branch": "main",
-    "snippets_path": "site/content/snippets"
+    "snippets_path": "site/content/snippets",
+    "urlMode": "contents"
   }
 }

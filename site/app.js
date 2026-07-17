@@ -79,35 +79,61 @@ async function loadConfig() {
     State.config = await res.json();
   } catch (e) {
     console.warn('Could not load config.json:', e);
-    State.config = { github: { repo: '', branch: 'main', snippets_path: 'site/content/snippets' } };
+    State.config = { tfs: { baseUrl: '', workItemsBase: '', workItemType: 'Issue', branch: 'main', snippets_path: 'site/content/snippets' } };
   }
 }
 
-function ghUrl(path) {
-  const { repo } = State.config.github || {};
-  return repo ? `https://github.com/${repo}/${path}` : '#';
+// TFS-only URL helpers (no GitHub fallback)
+function tfsRepoUrl(path = '') {
+  const cfg = State.config.tfs || {};
+  const base = (cfg.baseUrl || '').replace(/\/+$/, '');
+  if (!base) return '#';
+  if (!path) return base;
+  // Ensure path appends cleanly
+  return `${base}${path.startsWith('/') ? '' : '/'}${path}`;
 }
 
-function ghEditUrl(filePath) {
-  const { branch = 'main' } = State.config.github || {};
-  return ghUrl(`edit/${branch}/${filePath}`);
+function tfsEditUrl(filePath) {
+  const cfg = State.config.tfs || {};
+  const base = (cfg.baseUrl || '').replace(/\/+$/, '');
+  const branch = cfg.branch || 'main';
+  // default to 'contents' (view) to avoid "missing edit tab" on some TFS installs
+  const mode = (cfg.urlMode || 'contents').toLowerCase(); // 'edit' or 'contents'
+  if (!base || !filePath) return '#';
+  const aMode = mode === 'edit' ? 'edit' : 'contents';
+  return `${base}?path=/${encodeURIComponent(filePath)}&version=GB${encodeURIComponent(branch)}&_a=${aMode}`;
 }
 
-// Returns a mailto: or GitHub Issues URL for flag/suggest actions.
-// Set feedback.email in config.json to use email; leave blank to use GitHub.
+// Returns a mailto: or TFS work item create URL for flag/suggest actions.
+// Set feedback.email in config.json to use email; otherwise open TFS work item create.
 function feedbackUrl(subject, body) {
-  const email = (State.config.feedback || {}).email;
-  if (email) {
-    return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
-  const { repo } = State.config.github || {};
-  if (repo) {
-    return ghUrl(`issues/new?title=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-  }
-  return '#';
+    const email = (State.config.feedback || {}).email;
+    if (email) {
+        return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    const cfg = State.config.tfs || {};
+    const base = (cfg.workItemsBase || '').replace(/\/+$/, '');
+    if (!base) return '#';
+
+    const type = encodeURIComponent(cfg.workItemType || 'Issue');
+
+    // System.Description is an HTML field: convert newlines to <br>.
+    const htmlBody = body.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>');
+
+    const params = {
+        '[System.Title]': subject,
+        '[System.Description]': htmlBody
+    };
+
+    const qs = Object.entries(params)
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+        .join('&');
+
+    return `${base}/_workitems/create/${type}?${qs}`;
 }
 
-// Returns a mailto: or GitHub edit URL for "Suggest edit" on a code block.
+// Returns a mailto: or TFS file URL for "Suggest edit" on a code block.
 function suggestEditUrl(meta) {
   const email = (State.config.feedback || {}).email;
   if (email) {
@@ -115,8 +141,12 @@ function suggestEditUrl(meta) {
     const body = [`Code: ${meta.title}`, ``, `Suggested change:`, ``].join('\n');
     return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
-  const { snippets_path = 'site/content/snippets' } = State.config.github || {};
-  return meta.file ? ghEditUrl(`${snippets_path}/${meta.file}`) : '#';
+
+  const cfg = State.config.tfs || {};
+  const snippetsPath = (cfg.snippets_path || 'site/content/snippets').replace(/^\/+/, '');
+  if (!meta.file) return '#';
+  // Use tfsEditUrl (which now defaults to 'contents' unless cfg.urlMode==='edit')
+  return tfsEditUrl(`${snippetsPath}/${meta.file}`);
 }
 
 async function loadSections() {
@@ -707,7 +737,8 @@ function renderSection(section, subId) {
     if (sub.taxonomy_cards) {
       const taxGrid = el('div', {class: 'taxonomy-grid'});
       sub.taxonomy_cards.forEach(card => {
-        taxGrid.appendChild(renderTaxonomyCard(card));
+        // pass section/sub so the taxonomy card can create proper flag links
+        taxGrid.appendChild(renderTaxonomyCard(card, section, sub));
       });
       subSection.appendChild(taxGrid);
     }
@@ -826,19 +857,22 @@ function renderRuleCard(rule, section, sub) {
     slot.replaceWith(renderSnippet(rule.snippet_ref));
   }
 
-  // Flag button → email or GitHub issue pre-filled with context
-  card.querySelector('.flag-btn').addEventListener('click', () => {
-    const subject = `FLAG: ${rule.title}`;
-    const body = [
-      `Section: ${section ? section.title : '—'}`,
-      `Subsection: ${sub ? sub.title : '—'}`,
-      `Rule: ${rule.title}`,
-      ``,
-      `What's outdated or incorrect:`,
-      ``,
-    ].join('\n');
-    window.open(feedbackUrl(subject, body), '_blank');
-  });
+  // Flag button → pre-fill TFS work item with subsection title as the work item title
+  const flagBtn = card.querySelector('.flag-btn');
+  if (flagBtn) {
+    flagBtn.addEventListener('click', () => {
+      const subject = sub ? sub.title : (rule.title || section ? section.title : 'Flagged item');
+      const body = [
+        `Section: ${section ? section.title : '—'}`,
+        `Subsection: ${sub ? sub.title : '—'}`,
+        `Rule: ${rule ? rule.title : '—'}`,
+        ``,
+        `What's outdated or incorrect:`,
+        ``,
+      ].join('\n');
+      window.open(feedbackUrl(subject, body), '_blank');
+    });
+  }
 
   return card;
 }
@@ -982,28 +1016,51 @@ function renderDecisionTree(treeDef) {
 
 // ─── Taxonomy cards ──────────────────────────────────────────────────────────
 
-function renderTaxonomyCard(card) {
+function renderTaxonomyCard(card, section, sub) {
   const div = el('div', {class: 'taxonomy-card'});
   div.innerHTML = `
     <div class="taxonomy-badge">${card.abbreviation}</div>
     <div class="taxonomy-name">${card.full_name}</div>
+    <div class="taxonomy-actions">
+      <button class="flag-btn" title="Flag as outdated or incorrect" aria-label="Flag this card">
+        <span class="icon ti-flag" aria-hidden="true"></span>
+      </button>
+    </div>
     <div class="taxonomy-meta">
       ${card.funding ? `<span class="taxonomy-tag">${card.funding}</span>` : ''}
       ${card.coverage ? `<span class="taxonomy-tag">${card.coverage}</span>` : ''}
     </div>
     <div class="taxonomy-services">${card.services || ''}</div>
-    ${card.identification.length ? `
+    ${card.identification && card.identification.length ? `
       <div class="taxonomy-id-label">How to identify</div>
       <ul class="taxonomy-id-list">
         ${card.identification.map(i => `<li>${i}</li>`).join('')}
       </ul>
     ` : ''}
-    ${card.notes.length ? `
+    ${card.notes && card.notes.length ? `
       <ul class="taxonomy-notes">
         ${card.notes.map(n => `<li class="taxonomy-note">${n}</li>`).join('')}
       </ul>
     ` : ''}
   `;
+
+  // Wire the flag button to open a prefilled TFS work item
+  const btn = div.querySelector('.flag-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const subject = card.full_name || card.abbreviation || (sub ? sub.title : (section ? section.title : 'Flagged card'));
+      const body = [
+        `Section: ${section ? section.title : '—'}`,
+        `Subsection: ${sub ? sub.title : '—'}`,
+        `Card: ${card.full_name || card.abbreviation}`,
+        ``,
+        `What's outdated or incorrect:`,
+        ``,
+      ].join('\n');
+      window.open(feedbackUrl(subject, body), '_blank');
+    });
+  }
+
   return div;
 }
 
@@ -1136,10 +1193,11 @@ function bindSearch() {
 
     results.innerHTML = '';
     if (hits.length === 0) {
+      const suggestHref = feedbackUrl(`Add content: ${input.value}`, '');
       results.innerHTML = `
         <div class="search-empty">
           No results for "${input.value}"
-          <a class="search-suggest-link" href="${ghUrl(`issues/new?title=${encodeURIComponent(`Add content: ${input.value}`)}&labels=content-request`)}" target="_blank">
+          <a class="search-suggest-link" href="${suggestHref}" target="_blank">
             Suggest adding this topic →
           </a>
         </div>`;

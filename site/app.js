@@ -310,6 +310,7 @@ function buildSearchIndex() {
         section: section.title,
       });
 
+      // Index rules as before
       (sub.rules || []).forEach(rule => {
         State.searchIndex.push({
           type: rule.type || 'sop',
@@ -320,6 +321,29 @@ function buildSearchIndex() {
           subsection: sub.title,
         });
       });
+
+      // Index taxonomy cards (abbreviation, full_name, identification, notes, services, funding, coverage)
+      if (sub.taxonomy_cards && Array.isArray(sub.taxonomy_cards)) {
+        sub.taxonomy_cards.forEach(card => {
+          const textParts = [
+            card.abbreviation || '',
+            card.full_name || '',
+            (card.identification || []).join(' '),
+            (card.notes || []).join(' '),
+            card.services || '',
+            card.funding || '',
+            card.coverage || ''
+          ].filter(Boolean);
+          State.searchIndex.push({
+            type: 'taxonomy',
+            label: `Taxonomy: ${card.abbreviation || card.full_name}`,
+            text: textParts.join(' '),
+            nav: `${section.id}/${sub.id}`,
+            section: section.title,
+            subsection: sub.title,
+          });
+        });
+      }
     });
   });
 
@@ -328,7 +352,7 @@ function buildSearchIndex() {
     State.searchIndex.push({
       type: 'code',
       label: `Code: ${snippet.title}`,
-      text: `${snippet.title} ${snippet.tags.join(' ')} ${State.snippetCode[snippet.id] || ''}`,
+      text: `${snippet.title} ${(snippet.tags || []).join(' ')} ${State.snippetCode[snippet.id] || ''}`,
       nav: snippet.section_ref,
       section: 'Code Examples',
     });

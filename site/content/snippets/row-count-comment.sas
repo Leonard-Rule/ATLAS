@@ -4,3 +4,4 @@ proc sql; /* 45,231 rows */
   select distinct * from _events_dedup;
 quit;
 
+/*test*/

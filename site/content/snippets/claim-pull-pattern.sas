@@ -18,4 +18,4 @@ proc sql; /* N rows */
     on a.newid = b.newid;
 quit;
 
-/*test*/
+/*test*/ /*test*/

@@ -814,7 +814,9 @@ function renderRuleCard(rule, section, sub) {
     const listEl = card.querySelector('.rule-list');
     listEl.hidden = false;
     rule.list.forEach(item => {
-      listEl.appendChild(el('li', {}, item));
+      const li = document.createElement('li');
+      li.innerHTML = convertMarkdownInline(item);
+      listEl.appendChild(li);
     });
   }
 
@@ -831,14 +833,14 @@ function renderRuleCard(rule, section, sub) {
     callout.className = `rule-callout callout--${rule.callout.type || 'tip'}`;
     callout.innerHTML = `
       <strong class="callout-title">${rule.callout.title}</strong>
-      <span class="callout-body">${rule.callout.body}</span>
+      <span class="callout-body">${convertMarkdownInline(rule.callout.body)}</span>
     `;
   }
 
   // Tip box
   if (rule.tip) {
     const tipBox = el('div', {class: 'tip-box'});
-    tipBox.innerHTML = `<span class="icon ti-bulb" aria-hidden="true"></span> ${rule.tip}`;
+    tipBox.innerHTML = `<span class="icon ti-bulb" aria-hidden="true"></span> ${convertMarkdownInline(rule.tip)}`;
     card.querySelector('.rule-body').after(tipBox);
   }
 
@@ -851,7 +853,8 @@ function renderRuleCard(rule, section, sub) {
       const input = tplItem.querySelector('input');
       input.id = `check-${rule.id}-${i}`;
       tplItem.querySelector('label').setAttribute('for', input.id);
-      tplItem.querySelector('.checklist-text').textContent = item;
+      const checkText = tplItem.querySelector('.checklist-text');
+      checkText.innerHTML = convertMarkdownInline(item);
       ul.appendChild(tplItem);
     });
     card.appendChild(ul);

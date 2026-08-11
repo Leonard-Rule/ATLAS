@@ -318,6 +318,26 @@ function parseMarkdownRule(text) {
   return rule;
 }
 
+// ─── Markdown inline formatting ──────────────────────────────────────────────
+
+function convertMarkdownInline(text) {
+  if (!text) return '';
+  // Escape HTML special characters except for tags we want to create
+  let result = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Convert markdown formatting to HTML
+  // Bold: **text** → <strong>text</strong>
+  result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  // Italic: *text* → <em>text</em> (but not in URLs)
+  result = result.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>');
+
+  return result;
+}
+
 // ─── Search index ────────────────────────────────────────────────────────────
 
 function buildSearchIndex() {
@@ -787,7 +807,7 @@ function renderRuleCard(rule, section, sub) {
   card.querySelector('.rule-title').textContent = rule.title;
 
   const body = card.querySelector('.rule-body');
-  body.textContent = rule.body || '';
+  body.innerHTML = convertMarkdownInline(rule.body || '');
 
   // List
   if (rule.list && rule.list.length) {

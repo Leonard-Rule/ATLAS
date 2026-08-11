@@ -158,6 +158,7 @@ async function loadSections() {
   // We use a sections-manifest.json generated at build time (see netlify.toml)
   // Fallback: try each known filename
   const filenames = [
+    '00-about-atlas',
     '01-code-structure',
     '02-sql-best-practices',
     '03-ids-deduplication',

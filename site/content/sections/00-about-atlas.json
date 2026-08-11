@@ -1,0 +1,18 @@
+{
+  "id": "about-atlas",
+  "title": "About The ATLAS",
+  "icon": "ti-info-circle",
+  "order": 0,
+  "subsections": [
+    {
+      "id": "how-to-suggest-edits",
+      "title": "How to Suggest Code Edits",
+      "order": 1
+    },
+    {
+      "id": "how-to-add-content",
+      "title": "How to Add Content",
+      "order": 2
+    }
+  ]
+}

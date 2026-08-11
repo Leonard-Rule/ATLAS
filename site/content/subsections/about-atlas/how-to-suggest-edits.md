@@ -3,13 +3,14 @@ id: suggest-code-edit
 type: sop
 Found an issue or improvement opportunity in one of our SAS code snippets? Follow these 7 steps to suggest a code edit:
 
+- Find the code example you'd like to improve in any section containing SAS code. Look for the **suggest edits button**. This will bring yout ot he TFS repo
 ### Step 1: Locate the Snippet
 ![Step 1: Finding a code snippet](../../../content/images/how-to-suggest-edits/step-1.png)
-Find the code example you'd like to improve in the Code Examples section or any section containing SAS code. Look for **code blocks with syntax highlighting**.
+- Click the main button above the code snippet to create a new branch
 
-### Step 2: Click "Suggest Edit"
+### Step 2: Create a New Branch
 ![Step 2: Suggest Edit button](../../../content/images/how-to-suggest-edits/step-2.png)
-Click the **"Suggest Edit"** button near the code block. This will take you to the TFS repository.
+Click the **New branch** button above the text box.
 
 ### Step 3: Create a New Branch
 ![Step 3: Creating a new branch](../../../content/images/how-to-suggest-edits/step-3.png)

@@ -17,3 +17,5 @@ proc sql; /* N rows */
   inner join pop_table as b
     on a.newid = b.newid;
 quit;
+
+/*test*/

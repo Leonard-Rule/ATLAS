@@ -17,7 +17,7 @@ Have a standard, best practice, or code pattern that should be documented in ATL
 
 ## Add a Code Snippet
 id: add-code-snippet
-type: guide
+type: sop
 
 Useful SAS patterns, macros, or SQL techniques should be shared as code snippets for easy reference:
 
@@ -33,7 +33,7 @@ Useful SAS patterns, macros, or SQL techniques should be shared as code snippets
 
 ## Writing Effective Documentation
 id: documentation-standards
-type: guide
+type: sop
 
 All content in ATLAS follows these documentation standards:
 

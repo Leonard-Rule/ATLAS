@@ -329,6 +329,9 @@ function convertMarkdownInline(text) {
     .replace(/>/g, '&gt;');
 
   // Convert markdown formatting to HTML
+  // Images: ![alt text](path/to/image.png) → <img src="path/to/image.png" alt="alt text" class="rule-image">
+  result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="rule-image">');
+
   // Bold: **text** → <strong>text</strong>
   result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 

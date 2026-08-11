@@ -360,6 +360,8 @@ button{font-family:inherit}
 .rule-title{font-size:18.5px; font-weight:700; color:var(--text-strong); line-height:1.3; letter-spacing:-.015em}
 .rule-body{font-size:15.5px; color:var(--text); line-height:1.62}
 .rule-body:empty{display:none}
+.rule-image{max-width:100%; height:auto; display:block; margin:14px 0; border-radius:var(--r-md);
+  border:1px solid var(--line); box-shadow:var(--sh-sm)}
 .rule-list{margin:12px 0 0; padding-left:4px; list-style:none; display:flex; flex-direction:column; gap:8px}
 .rule-list[hidden]{display:none}
 .rule-list li{position:relative; padding-left:24px; font-size:15px; color:var(--text)}

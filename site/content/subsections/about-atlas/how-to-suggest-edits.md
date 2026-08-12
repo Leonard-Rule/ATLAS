@@ -3,7 +3,6 @@ id: suggest-code-edit
 type: sop
 
 ### Found an issue or improvement opportunity in one of our SAS code snippets? Follow these 7 steps to suggest a code edit:
----
 First, find the code example you'd like to improve in any section containing SAS code. Look for the **suggest edits button**. This will bring you to the TFS repo.
 ### Step 1: Locate the Snippet
 ![Step 1: Finding a code snippet](../../../content/images/how-to-suggest-edits/step-1.png)

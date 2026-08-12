@@ -922,8 +922,22 @@ function renderSnippet(snippetId) {
     block.querySelector('.snippet-title').textContent = meta.title;
 
     block.querySelector('.copy-btn').addEventListener('click', () => {
+      const btn = block.querySelector('.copy-btn');
+      btn.disabled = true;
       const placeholder = '/* [Code snippet to be added] */';
-      copyToClipboard(placeholder);
+      copyToClipboard(placeholder).then((success) => {
+        if (success) {
+          btn.innerHTML = '<span class="icon ti-check"></span> Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = '<span class="icon ti-copy"></span> Copy';
+            btn.classList.remove('copied');
+            btn.disabled = false;
+          }, 2000);
+        } else {
+          btn.disabled = false;
+        }
+      });
     });
 
     block.querySelector('.contribute-btn').addEventListener('click', () => {
@@ -948,14 +962,21 @@ function renderSnippet(snippetId) {
   block.querySelector('code').textContent = code;
 
   block.querySelector('.copy-btn').addEventListener('click', () => {
-    copyToClipboard(code);
     const btn = block.querySelector('.copy-btn');
-    btn.innerHTML = '<span class="icon ti-check"></span> Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.innerHTML = '<span class="icon ti-copy"></span> Copy';
-      btn.classList.remove('copied');
-    }, 2000);
+    btn.disabled = true;
+    copyToClipboard(code).then((success) => {
+      if (success) {
+        btn.innerHTML = '<span class="icon ti-check"></span> Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = '<span class="icon ti-copy"></span> Copy';
+          btn.classList.remove('copied');
+          btn.disabled = false;
+        }, 2000);
+      } else {
+        btn.disabled = false;
+      }
+    });
   });
 
   block.querySelector('.suggest-btn').addEventListener('click', () => {
@@ -1313,17 +1334,33 @@ function el(tag, attrs = {}, text = '') {
 }
 
 function copyToClipboard(text) {
-  navigator.clipboard.writeText(text)
-    .then(() => showToast('Copied to clipboard'))
+  return navigator.clipboard.writeText(text)
+    .then(() => {
+      showToast('Copied to clipboard');
+      return true;
+    })
     .catch(() => {
       // Fallback for older browsers
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast('Copied to clipboard');
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        const success = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (success) {
+          showToast('Copied to clipboard');
+          return true;
+        } else {
+          showToast('Failed to copy to clipboard');
+          return false;
+        }
+      } catch (e) {
+        showToast('Failed to copy to clipboard');
+        return false;
+      }
     });
 }
 

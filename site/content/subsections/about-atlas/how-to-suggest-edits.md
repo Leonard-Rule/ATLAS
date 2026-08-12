@@ -1,12 +1,12 @@
 ## Suggest an Edit to Existing Code
 id: suggest-code-edit
 type: sop
-Found an issue or improvement opportunity in one of our SAS code snippets? Follow these 7 steps to suggest a code edit:
+### Found an issue or improvement opportunity in one of our SAS code snippets? Follow these 7 steps to suggest a code edit:
 
-- Find the code example you'd like to improve in any section containing SAS code. Look for the **suggest edits button**. This will bring yout ot he TFS repo
+First, find the code example you'd like to improve in any section containing SAS code. Look for the **suggest edits button**. This will bring you to the TFS repo.
 ### Step 1: Locate the Snippet
 ![Step 1: Finding a code snippet](../../../content/images/how-to-suggest-edits/step-1.png)
-- Click the main button above the code snippet to create a new branch
+Click the 'main' button above the code snippet to create a new branch.
 
 ### Step 2: Create a New Branch
 ![Step 2: Suggest Edit button](../../../content/images/how-to-suggest-edits/step-2.png)
@@ -14,23 +14,23 @@ Click the **New branch** button above the text box.
 
 ### Step 3: Create a New Branch
 ![Step 3: Creating a new branch](../../../content/images/how-to-suggest-edits/step-3.png)
-Click **'main'** to the left of the file name to create a new branch. Enter a **branch name** like `initials_filename_edits` (e.g., `jd_claim_pull_pattern_edits`).
+Click **'main'** to the left of the file name to create a new branch. Enter a **branch name** like `initials_filename_edits` (e.g., `LR_claim_pull_pattern_edits` FYI spaces are not allowed).
 
 ### Step 4: Make Your Changes
 ![Step 4: Editing the code](../../../content/images/how-to-suggest-edits/step-4.png)
-Click the **edit button** (pencil icon) and **make your code edits**. Ensure your changes follow the **code standards and best practices** documented in ATLAS.
+Click the **edit button** (pencil icon) and **make your code edits**. Then click save and go to the pull request tab.
 
 ### Step 5: Save Your Changes
 ![Step 5: Saving changes](../../../content/images/how-to-suggest-edits/step-5.png)
-After editing, scroll down and click **"Commit"**. Add a **clear commit message** describing what you changed and why (e.g., "Improve performance with PROC SQL optimization").
+Click new pull request and select your branch you just created. 
 
 ### Step 6: Create a Pull Request
 ![Step 6: Pull Request tab](../../../content/images/how-to-suggest-edits/step-6.png)
-Navigate to the **"Pull Requests"** tab. Click **"New Pull Request"** and select your branch. Add a **clear description** of your changes and add the **appropriate reviewers**.
+Add a **clear description** of your changes and add Nichole, Cain, and Sarah as (and others as needed) as reveiwers.
 
 ### Step 7: Submit for Review
 ![Step 7: Creating the pull request](../../../content/images/how-to-suggest-edits/step-7.png)
-Click **"Create Pull Request"**. Your suggestion will be reviewed by the team. Address any feedback and the maintainers will merge your changes when ready.
+Click **"New Pull Request"**. Your suggestion will be reviewed by the team. Address any feedback and the maintainers will merge your changes when ready.
 
 ---
 ## Report a Documentation Issue

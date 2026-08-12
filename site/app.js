@@ -673,7 +673,7 @@ function renderHome() {
   about.innerHTML = `
     <div class="about-card-title"><span class="icon ti-info-circle" aria-hidden="true"></span> About this site</div>
     <p>ATLAS is a living reference for the team's analytical standards, SAS/SQL patterns, and project conventions. It exists so we can all learn from each other and standardize the way we pull and analyze data.</p>
-    <p>Found something out of date, or have a pattern worth adding? Use the <span class="icon ti-flag" aria-hidden="true"></span> flag icon on any rule to mark it as outdated or incorrect, or use "Suggest edit" on a code snippet to propose a change. They will open in GitHub so you can submit and the team can review it.</p>
+    <p>Found something out of date, or have a pattern worth adding? Use the <span class="icon ti-flag" aria-hidden="true"></span> flag icon on any rule to mark it as outdated or incorrect, or use "Suggest edit" on a code snippet to propose a change. They will open in TFS so you can submit and the team can review it.</p>
   `;
   area.appendChild(about);
 

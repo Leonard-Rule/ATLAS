@@ -13,15 +13,5 @@ type: sop
 Useful SAS patterns, macros, or SQL techniques should be shared as code snippets for easy reference:
 - **Prepare your code** - Write clean, well-commented SAS or SQL code
 - **Document the purpose** - Include a clear title (what does this code do?), a description of when to use it, any dependencies or prerequisites, and input/output expectations
-- **Submit** - Use the "Add Item" feature in the Code Examples section
----
-## Writing Effective Documentation
-id: documentation-standards
-type: sop
-All content in ATLAS follows these documentation standards:
-- **Titles** - Descriptive, specific, and action-oriented (e.g., "How to Validate Date Overlaps")
-- **Structure** - Use clear sections with headers, bullet points for key ideas, and examples
-- **Examples** - Include real code snippets and expected outputs where applicable
-- **Consistency** - Follow the tone and style of existing ATLAS content
-- **Accuracy** - Ensure all information is current and tested in real-world scenarios
+- **Submit** - Use the "Add Item" feature 
 ---

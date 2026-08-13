@@ -10,4 +10,4 @@ data _members_top;
   by studyid;
   if first.studyid;
 run;
-/* N = _____ rows — should equal distinct studyid count from input */ test
+/* N = _____ rows — should equal distinct studyid count from input */

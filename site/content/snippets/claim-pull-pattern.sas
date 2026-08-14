@@ -1,6 +1,9 @@
+/*NOTE: when extracting large pulls of claims always limit the number of obs to be sure*/
+/*the code runs without error. Once the code runs successfully comment out the inobs=*/
+
 /* Step 1: pull raw claims for population using inline subquery */
 /* Use &med_varis. macro — no need to pull entire claim lines        */
-proc sql; /* N rows */
+proc sql /*inobs=10*/; /* N rows */
   create table raw_claims as
   select distinct &med_varis.
   from apcdclms.claimtable

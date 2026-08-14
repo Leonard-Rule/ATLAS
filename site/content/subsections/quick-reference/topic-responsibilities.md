@@ -6,13 +6,13 @@ Each section of the hub has a primary owner responsible for keeping its content 
 
 | Section | Responsible |
 |---|---|
-| Code Structure |Connor|
-| SQL Best Practices | |
-| IDs & Deduplication |Stella|
-| Concurrent Claims | |
-| Claims Classification | |
-| Member & Enrollment |Sarah|
-| Validation Practices | |
-| Macro Patterns |Nichole|
-| Provider Taxonomy |Leo|
-| Visualizations |Cain|
+| Code Structure |Available|
+| SQL Best Practices |Available|
+| IDs & Deduplication |Available|
+| Concurrent Claims |Available|
+| Claims Classification |Available|
+| Member & Enrollment |Available|
+| Validation Practices |Available|
+| Macro Patterns |Available|
+| Provider Taxonomy |Available|
+| Visualizations |Available|

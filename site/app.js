@@ -919,28 +919,30 @@ function renderSnippet(snippetId) {
   if (meta.status === 'placeholder' || !code) {
     const tpl = document.getElementById('tpl-placeholder-snippet').content.cloneNode(true);
     const block = tpl.querySelector('.snippet-block');
+    const copyBtn = block.querySelector('.copy-btn');
+    const contributeBtn = block.querySelector('.contribute-btn');
+
     block.querySelector('.snippet-title').textContent = meta.title;
 
-    block.querySelector('.copy-btn').addEventListener('click', () => {
-      const btn = block.querySelector('.copy-btn');
-      btn.disabled = true;
+    copyBtn.addEventListener('click', () => {
+      copyBtn.disabled = true;
       const placeholder = '/* [Code snippet to be added] */';
       copyToClipboard(placeholder).then((success) => {
         if (success) {
-          btn.innerHTML = '<span class="icon ti-check"></span> Copied!';
-          btn.classList.add('copied');
+          copyBtn.innerHTML = '<span class="icon ti-check"></span> Copied!';
+          copyBtn.classList.add('copied');
           setTimeout(() => {
-            btn.innerHTML = '<span class="icon ti-copy"></span> Copy';
-            btn.classList.remove('copied');
-            btn.disabled = false;
+            copyBtn.innerHTML = '<span class="icon ti-copy"></span> Copy';
+            copyBtn.classList.remove('copied');
+            copyBtn.disabled = false;
           }, 2000);
         } else {
-          btn.disabled = false;
+          copyBtn.disabled = false;
         }
       });
     });
 
-    block.querySelector('.contribute-btn').addEventListener('click', () => {
+    contributeBtn.addEventListener('click', () => {
       const subject = `Contribute: ${meta.title}`;
       const body = [
         `Code: ${meta.title}`,
@@ -956,30 +958,31 @@ function renderSnippet(snippetId) {
 
   const tpl = document.getElementById('tpl-snippet-block').content.cloneNode(true);
   const block = tpl.querySelector('.snippet-block');
+  const copyBtn = block.querySelector('.copy-btn');
+  const suggestBtn = block.querySelector('.suggest-btn');
 
   block.querySelector('.snippet-lang').textContent = (meta.language || 'sas').toUpperCase();
   block.querySelector('.snippet-title').textContent = meta.title;
   block.querySelector('code').textContent = code;
 
-  block.querySelector('.copy-btn').addEventListener('click', () => {
-    const btn = block.querySelector('.copy-btn');
-    btn.disabled = true;
+  copyBtn.addEventListener('click', () => {
+    copyBtn.disabled = true;
     copyToClipboard(code).then((success) => {
       if (success) {
-        btn.innerHTML = '<span class="icon ti-check"></span> Copied!';
-        btn.classList.add('copied');
+        copyBtn.innerHTML = '<span class="icon ti-check"></span> Copied!';
+        copyBtn.classList.add('copied');
         setTimeout(() => {
-          btn.innerHTML = '<span class="icon ti-copy"></span> Copy';
-          btn.classList.remove('copied');
-          btn.disabled = false;
+          copyBtn.innerHTML = '<span class="icon ti-copy"></span> Copy';
+          copyBtn.classList.remove('copied');
+          copyBtn.disabled = false;
         }, 2000);
       } else {
-        btn.disabled = false;
+        copyBtn.disabled = false;
       }
     });
   });
 
-  block.querySelector('.suggest-btn').addEventListener('click', () => {
+  suggestBtn.addEventListener('click', () => {
     window.open(suggestEditUrl(meta), '_blank');
   });
 
@@ -1340,16 +1343,25 @@ function copyToClipboard(text) {
       return true;
     })
     .catch(() => {
-      // Fallback for older browsers
+      // Fallback for older browsers using execCommand
       try {
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.top = '-9999px';
         ta.style.opacity = '0';
+        ta.style.pointerEvents = 'none';
+        ta.setAttribute('readonly', '');
         document.body.appendChild(ta);
+
+        // For iOS compatibility
         ta.select();
+        ta.setSelectionRange(0, text.length);
+
         const success = document.execCommand('copy');
         document.body.removeChild(ta);
+
         if (success) {
           showToast('Copied to clipboard');
           return true;
@@ -1358,6 +1370,7 @@ function copyToClipboard(text) {
           return false;
         }
       } catch (e) {
+        console.error('Copy failed:', e);
         showToast('Failed to copy to clipboard');
         return false;
       }

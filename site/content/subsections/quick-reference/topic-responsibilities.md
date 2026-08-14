@@ -6,13 +6,13 @@ Each section of the hub has a primary owner responsible for keeping its content 
 
 | Section | Responsible |
 |---|---|
-| Code Structure | |
-| SQL Best Practices | |
-| IDs & Deduplication | |
-| Concurrent Claims | |
-| Claims Classification | |
-| Member & Enrollment | |
-| Validation Practices | |
-| Macro Patterns | |
-| Provider Taxonomy | |
-| Visualizations | |
+| Code Structure |Available|
+| SQL Best Practices |Available|
+| IDs & Deduplication |Available|
+| Concurrent Claims |Available|
+| Claims Classification |Available|
+| Member & Enrollment |Available|
+| Validation Practices |Available|
+| Macro Patterns |Available|
+| Provider Taxonomy |Available|
+| Visualizations |Available|

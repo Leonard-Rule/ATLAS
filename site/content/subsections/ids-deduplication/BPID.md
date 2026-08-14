@@ -1,4 +1,4 @@
-##BPID - person identifier in the mother child linkage file
+## BPID - person identifier in the mother child linkage file
 id: bpid-rule
 type: reference
 

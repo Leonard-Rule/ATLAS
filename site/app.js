@@ -1343,49 +1343,58 @@ function el(tag, attrs = {}, text = '') {
 function copyToClipboard(text) {
   console.log('copyToClipboard called with:', text.substring(0, 50) + '...');
 
-  return navigator.clipboard.writeText(text)
-    .then(() => {
-      console.log('Clipboard API succeeded');
+  // Check if Clipboard API is available
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text)
+      .then(() => {
+        console.log('Clipboard API succeeded');
+        showToast('Copied to clipboard');
+        return true;
+      })
+      .catch((error) => {
+        console.log('Clipboard API failed, trying fallback:', error);
+        return useFallbackCopy(text);
+      });
+  } else {
+    console.log('Clipboard API not available, using fallback');
+    return Promise.resolve(useFallbackCopy(text));
+  }
+}
+
+function useFallbackCopy(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    ta.style.top = '-9999px';
+    ta.style.opacity = '0';
+    ta.style.pointerEvents = 'none';
+    ta.setAttribute('readonly', '');
+    document.body.appendChild(ta);
+
+    // For iOS compatibility
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+
+    const success = document.execCommand('copy');
+    console.log('execCommand copy result:', success);
+    document.body.removeChild(ta);
+
+    if (success) {
+      console.log('Fallback copy succeeded');
       showToast('Copied to clipboard');
       return true;
-    })
-    .catch((error) => {
-      console.log('Clipboard API failed, trying fallback:', error);
-      // Fallback for older browsers using execCommand
-      try {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.left = '-9999px';
-        ta.style.top = '-9999px';
-        ta.style.opacity = '0';
-        ta.style.pointerEvents = 'none';
-        ta.setAttribute('readonly', '');
-        document.body.appendChild(ta);
-
-        // For iOS compatibility
-        ta.select();
-        ta.setSelectionRange(0, text.length);
-
-        const success = document.execCommand('copy');
-        console.log('execCommand copy result:', success);
-        document.body.removeChild(ta);
-
-        if (success) {
-          console.log('Fallback copy succeeded');
-          showToast('Copied to clipboard');
-          return true;
-        } else {
-          console.log('Fallback copy failed - execCommand returned false');
-          showToast('Failed to copy to clipboard');
-          return false;
-        }
-      } catch (e) {
-        console.error('Copy failed with exception:', e);
-        showToast('Failed to copy to clipboard');
-        return false;
-      }
-    });
+    } else {
+      console.log('Fallback copy failed - execCommand returned false');
+      showToast('Failed to copy to clipboard');
+      return false;
+    }
+  } catch (e) {
+    console.error('Copy failed with exception:', e);
+    showToast('Failed to copy to clipboard');
+    return false;
+  }
 }
 
 function showToast(msg) {

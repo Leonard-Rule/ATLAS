@@ -925,9 +925,11 @@ function renderSnippet(snippetId) {
     block.querySelector('.snippet-title').textContent = meta.title;
 
     copyBtn.addEventListener('click', () => {
+      console.log('Copy button clicked for placeholder snippet');
       copyBtn.disabled = true;
       const placeholder = '/* [Code snippet to be added] */';
       copyToClipboard(placeholder).then((success) => {
+        console.log('Copy result:', success);
         if (success) {
           copyBtn.innerHTML = '<span class="icon ti-check"></span> Copied!';
           copyBtn.classList.add('copied');
@@ -966,8 +968,10 @@ function renderSnippet(snippetId) {
   block.querySelector('code').textContent = code;
 
   copyBtn.addEventListener('click', () => {
+    console.log('Copy button clicked for active snippet');
     copyBtn.disabled = true;
     copyToClipboard(code).then((success) => {
+      console.log('Copy result:', success);
       if (success) {
         copyBtn.innerHTML = '<span class="icon ti-check"></span> Copied!';
         copyBtn.classList.add('copied');
@@ -1337,12 +1341,16 @@ function el(tag, attrs = {}, text = '') {
 }
 
 function copyToClipboard(text) {
+  console.log('copyToClipboard called with:', text.substring(0, 50) + '...');
+
   return navigator.clipboard.writeText(text)
     .then(() => {
+      console.log('Clipboard API succeeded');
       showToast('Copied to clipboard');
       return true;
     })
-    .catch(() => {
+    .catch((error) => {
+      console.log('Clipboard API failed, trying fallback:', error);
       // Fallback for older browsers using execCommand
       try {
         const ta = document.createElement('textarea');
@@ -1360,17 +1368,20 @@ function copyToClipboard(text) {
         ta.setSelectionRange(0, text.length);
 
         const success = document.execCommand('copy');
+        console.log('execCommand copy result:', success);
         document.body.removeChild(ta);
 
         if (success) {
+          console.log('Fallback copy succeeded');
           showToast('Copied to clipboard');
           return true;
         } else {
+          console.log('Fallback copy failed - execCommand returned false');
           showToast('Failed to copy to clipboard');
           return false;
         }
       } catch (e) {
-        console.error('Copy failed:', e);
+        console.error('Copy failed with exception:', e);
         showToast('Failed to copy to clipboard');
         return false;
       }

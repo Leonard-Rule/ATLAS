@@ -3,6 +3,8 @@
 
 /* Step 1: pull raw claims for population using inline subquery */
 /* Use &med_varis. macro — no need to pull entire claim lines        */
+/* Once you pull your claims you can limit to the fields that you need for your analysis*/
+
 proc sql /*inobs=10*/; /* N rows */
   create table raw_claims as
   select distinct &med_varis.
@@ -11,14 +13,24 @@ proc sql /*inobs=10*/; /* N rows */
         (select distinct newid from pop_table);
 quit;
 
+/*Always count the number of individuals as your proceed through extractions and joins*/
+Proc sql;
+  select count(distinct newid) as NIDcnt format = comma12.
+    from raw_claims; 
+/*xxxxxx*/
+
 /* Step 2: join to bring in studyid, payer_type, and demo fields */
 proc sql; /* N rows */
 
   create table claims_demo as
-  select distinct a.*, b.studyid, b.payer_type
-  from raw_claims as a
-  inner join pop_table as b
+  select distinct a.studyid, a.payer_type, b.* 
+  from pop_table a 
+  inner join raw_claims b
     on a.newid = b.newid;
 quit;
 
-/*test*/ /*test*/
+Proc sql;
+  select count(distinct newid) as NIDcnt format = comma12.
+    , count(distinct studyid) as SIDcnt format = comma12.
+      from claims_demo; 
+/*xxxxxx; xxxxxxx*/

@@ -2,7 +2,7 @@
   "id": "provider-taxonomy",
   "title": "Provider & Clinic Types",
   "icon": "ti-building-hospital",
-  "order": 9,
+  "order": 10,
   "subsections": [
     {
       "id": "clinic-types",

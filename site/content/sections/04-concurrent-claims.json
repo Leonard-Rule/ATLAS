@@ -2,7 +2,7 @@
   "id": "concurrent-claims",
   "title": "Episode of Care Logic",
   "icon": "ti-calendar-event",
-  "order": 4,
+  "order": 5,
   "subsections": [
     {
       "id": "date-overlap-definition",

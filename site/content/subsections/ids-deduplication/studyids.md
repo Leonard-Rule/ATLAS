@@ -10,7 +10,6 @@ Every member record and every record ACHI receives gets a HashID.  Unfortunately
 - a typo in the DOB or last name
 - a last name change that has not been updated across all data sources
 - different ways of handling special characters such as apostrophes, hyphens, or spaces. 
-When any ID representing an individual has more than one StudyID we consider this a "divergence."
-
+When any ID representing an individual has more than one StudyID we consider this a "divergence."\
 Note: While the HashID already includes the date of birth in the hash, we include it in our StudyID to use as a quick check if needed.
 [/callout]

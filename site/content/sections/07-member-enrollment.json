@@ -2,7 +2,7 @@
   "id": "member-enrollment",
   "title": "Member & Enrollment Tables",
   "icon": "ti-users",
-  "order": 4,
+  "order": 7,
   "subsections": [
     {
       "id": "payer-assignment-medical",

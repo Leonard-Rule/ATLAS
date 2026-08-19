@@ -126,6 +126,15 @@
     "tags": ["classification", "claims", "inpatient", "outpatient"]
   },
   {
+    "id": "stacking-diagnosis-codes",
+    "title": "Stacking Diagnosis Codes",
+    "file": "stacking-diagnosis-codes.sas",
+    "language": "sas",
+    "section_ref": "claims-classification/stacking-diagnosis-codes",
+    "status": "active",
+    "tags": ["diagnosis", "stacking", "ccsr", "data-step"]
+  },
+  {
     "id": "payer-assignment-medical",
     "title": "Medical Payer Assignment",
     "file": "payer-assignment-medical.sas",
@@ -142,6 +151,15 @@
     "section_ref": "member-enrollment/payer-assignment-dental",
     "status": "active",
     "tags": ["payer", "dental", "ddarf"]
+  },
+  {
+    "id": "payer-assignment-pharmacy",
+    "title": "Payer Assignment (stand alone pharmacy plans)",
+    "file": "payer-assignment-pharmacy.sas",
+    "language": "sas",
+    "section_ref": "member-enrollment/payer-assignment-pharmacy",
+    "status": "active",
+    "tags": ["payer", "pharmacy", "pbm", "stand-alone"]
   },
   {
     "id": "race-ethnicity-sex",

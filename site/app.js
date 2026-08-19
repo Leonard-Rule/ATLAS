@@ -168,6 +168,7 @@ async function loadSections() {
     '07-validation-practices',
     '08-macro-patterns',
     '09-provider-taxonomy',
+    '10-data-repositories',
     '11-visualizations',
     '12-quick-reference',
   ];

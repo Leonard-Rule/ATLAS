@@ -2,13 +2,14 @@
 id: health-transparency-initiative-hti
 type: reference
 
-The purpose of the HTI was created to build a centralized, statewide source of administrative healthcare data. Its goal is to make healthcare utilization, pricing, and quality metrics accessible to consumers, researchers, and policymakers to support cost control, research, and population health strategies. It was authorized under the Arkansas General Assembly Act 1233 of 2015 and expanded upon in Act 948 and Act 979 both of 2017.
+The purpose of the HTI was created to build a centralized, statewide source of administrative healthcare data. Its goal is to make healthcare utilization, pricing, and quality metrics accessible to consumers, researchers, and policymakers to support cost control, research, and population health strategies. It was authorized under the Arkansas General Assembly Act 1233 of 2015 and expanded upon in Act 948 and Act 979 both of 2017.\
 
-It contains the Arkansas All-Payer Claims Database, the medical marijuana cardholder data, the ADH birth and death records, and hospital and emergency department discharge for ONLY uninsured individuals.
+It contains the Arkansas All-Payer Claims Database, the medical marijuana cardholder data, the ADH birth and death records, and hospital and emergency department discharge for ONLY uninsured individuals.\
+
 To link claims records to member enrollment records we use the NewID. To link different coverage types, such as medical and pharmacy, we use the StudyID or MPID. To link to the ADH records we use StudyID or MPID. The use of StudyID or MPID is dependent on the type of analysis.
 
 ### APCD
-The APCD contains member enrollment, medical, pharmacy, and dental claims for all payers providing coverage in Arkansas except those that are private self-funded plans, such as those covering Walmart or Tyson employees, or for payers with less than 2,000 covered lives.
+The APCD contains member enrollment, medical, pharmacy, and dental claims for all payers providing coverage in Arkansas except those that are private self-funded plans, such as those covering Walmart or Tyson employees, or for payers with less than 2,000 covered lives.\
 Note that Walmart and Tyson as well as a couple of other large employers that offer self-funded plans are primarily located in Northwest Arkansas. This means we have less insight to this area when we are dealing with the APCD commercial claims.
 
 ### ADH Data

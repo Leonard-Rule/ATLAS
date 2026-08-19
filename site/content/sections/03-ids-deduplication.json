@@ -2,7 +2,7 @@
   "id": "ids-deduplication",
   "title": "ACHI IDs",
   "icon": "ti-fingerprint",
-  "order": 2,
+  "order": 3,
   "subsections": [
     {
       "id": "newids",

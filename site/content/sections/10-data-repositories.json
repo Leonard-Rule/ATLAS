@@ -2,7 +2,7 @@
   "id": "data-repositories",
   "title": "Data Repositories",
   "icon": "ti-server",
-  "order": 10,
+  "order": 04,
   "subsections": [
     {
       "id": "health-data-initiative",

@@ -1,5 +1,5 @@
 ## Healthcare Transparency Initiative (HTI)
-id: helath-transparency-initiative-hti
+id: health-transparency-initiative-hti
 type: reference
 
 The purpose of the HTI was created to build a centralized, statewide source of administrative healthcare data. Its goal is to make healthcare utilization, pricing, and quality metrics accessible to consumers, researchers, and policymakers to support cost control, research, and population health strategies. It was authorized under the Arkansas General Assembly Act 1233 of 2015 and expanded upon in Act 948 and Act 979 both of 2017.

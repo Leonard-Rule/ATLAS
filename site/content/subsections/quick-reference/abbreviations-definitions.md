@@ -1,5 +1,7 @@
 ## Abbreviations and Definitions
 
+id: Abbreviations-definitions type: reference
+
 | Abbreviation | Definition |
 |---|---|
 | APCD | All-Payer Claims Database |

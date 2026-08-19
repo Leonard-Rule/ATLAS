@@ -17,6 +17,15 @@
     "status": "active",
     "tags": ["sql", "claims", "performance", "efficiency"]
   },
+    {
+    "id": "elixhauser-score",
+    "title": "Elixhauser Score",
+    "file": "elixhauser-score.sas",
+    "language": "sas",
+    "section_ref": "claims-classification/inpatient-outpatient",
+    "status": "active",
+    "tags": ["comorbidities", "elixhauser"]
+  },
   {
     "id": "null-not-in-fix",
     "title": "NOT IN with NULLs — LEFT JOIN fix",

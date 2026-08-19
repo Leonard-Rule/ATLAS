@@ -1,5 +1,6 @@
 ## Abbreviations and Definitions
-id: Abbreviations-definitions type: reference
+id: Abbreviations-definitions
+type: reference
 
 | Abbreviation | Definition |
 |---|---|

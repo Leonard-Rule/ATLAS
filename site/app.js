@@ -276,6 +276,14 @@ function parseMarkdownRule(text) {
   const flushPara = () => {
     if (paraBuf.length) { bodyBlocks.push({ type: 'para', segments: paraBuf }); paraBuf = []; }
   };
+  // Top-level "- " bullet lines used to be diverted entirely into the flat
+  // `listItems` array, which the card renders in a separate, fixed-position
+  // slot — breaking document order whenever a list sits between paragraphs
+  // or after a callout. bodyListBuf keeps them in the same ordered stream.
+  let bodyListBuf = [];
+  const flushBodyList = () => {
+    if (bodyListBuf.length) { bodyBlocks.push({ type: 'list', items: bodyListBuf }); bodyListBuf = []; }
+  };
   let callout = null, inCallout = false, calloutType = '', calloutTitle = '';
   let calloutBlocks = [], calloutParaBuf = [], calloutListBuf = null;
   const flushCalloutPara = () => {
@@ -293,7 +301,7 @@ function parseMarkdownRule(text) {
     if (line.trimStart().startsWith('---') && line.trim() === '---') break;
 
     if (line.startsWith('[callout ')) {
-      flushPara(); // close any open body paragraph so it renders before this callout
+      flushPara(); flushBodyList(); // close any open body paragraph/list so it renders before this callout
       inCallout = true;
       const m = line.match(/\[callout (\w+) "([^"]+)"\]/);
       calloutType = m ? m[1] : 'tip';
@@ -348,28 +356,41 @@ function parseMarkdownRule(text) {
       if (line.trim()) tipLines.push(line.trim());
 
     } else if (line.startsWith('- [ ] ')) {
+      flushPara(); flushBodyList();
       checklistItems.push(line.slice(6).trim());
     } else if (line.startsWith('- ')) {
-      listItems.push(line.slice(2).trim());
+      // Close any open paragraph so the list starts fresh, then accumulate into
+      // the in-body list block (kept in document order) — while still recording
+      // into the flat `listItems` array for search indexing and back-compat.
+      flushPara();
+      const itemText = line.slice(2).trim();
+      bodyListBuf.push(itemText);
+      listItems.push(itemText);
     } else if (line.startsWith('| ') && !/^\|[\s\-:|]+\|/.test(line)) {
+      flushPara(); flushBodyList();
       tableLines.push(line);
     } else if (/^\|[\s\-:|]+\|/.test(line)) {
       // table separator row — skip
     } else if (!line.trim()) {
-      // Blank line in the body → end the current paragraph (starts a new one).
+      // Blank line in the body → end the current paragraph/list (starts a new one).
       flushPara();
+      flushBodyList();
     } else if (/^#{3,6}\s+/.test(line)) {
       // In-body subheading (###, ####, …) — keep it as its own block, in order.
       flushPara();
+      flushBodyList();
       const hm = line.match(/^(#{3,6})\s+(.*)$/);
       bodyBlocks.push({ type: 'heading', level: hm[1].length, text: hm[2].trim() });
     } else if (!line.startsWith('#')) {
-      // Regular body text — accumulate into the current paragraph (with hard-break support).
+      // Regular body text — close any open list, then accumulate into the
+      // current paragraph (with hard-break support).
+      flushBodyList();
       pushSegment(paraBuf, line);
     }
   }
 
   flushPara();
+  flushBodyList();
   rule.body = bodyBlocks.filter(b => b.type === 'para').map(b => plainFromSegments(b.segments)).join(' ');
   if (bodyBlocks.length) rule.bodyBlocks = bodyBlocks;
   if (!rule.id) rule.id = rule.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/, '');
@@ -917,14 +938,17 @@ function renderRuleCard(rule, section, sub) {
   const bodyBlocks = rule.bodyBlocks || [];
   const paraCount = bodyBlocks.filter(b => b.type === 'para').length;
   // Use the ordered block renderer when the body has anything beyond a single
-  // plain paragraph: subheadings, callouts, multiple paragraphs, or hard breaks.
-  const hasStructure = bodyBlocks.some(b => b.type === 'heading' || b.type === 'callout')
+  // plain paragraph: subheadings, callouts, in-body lists, multiple paragraphs,
+  // or hard breaks. Keeping lists in this same stream (instead of the old
+  // separate fixed-position .rule-list slot) is what keeps a list that sits
+  // between paragraphs — or right after a callout — in the order it was written.
+  const hasStructure = bodyBlocks.some(b => b.type === 'heading' || b.type === 'callout' || b.type === 'list')
     || paraCount > 1
     || bodyBlocks.some(b => b.type === 'para' && (b.segments || []).some(s => s.br));
 
   if (hasStructure) {
-    // Structured render: preserve subheadings and callouts in document order,
-    // so paragraphs written after a callout still render after it.
+    // Structured render: preserve subheadings, callouts, and lists in document
+    // order, so content written after a callout (or list) still renders after it.
     body.innerHTML = bodyBlocks.map(b => {
       if (b.type === 'heading') {
         const lvl = Math.min(Math.max(b.level, 3), 6); // never emit h1/h2 inside a card
@@ -933,6 +957,11 @@ function renderRuleCard(rule, section, sub) {
       if (b.type === 'callout') {
         return `<div class="rule-callout callout--${b.callout.type || 'tip'}">${renderCalloutInner(b.callout)}</div>`;
       }
+      if (b.type === 'list') {
+        return `<ul class="rule-list rule-list--inline">${
+          b.items.map(it => `<li>${convertMarkdownInline(it)}</li>`).join('')
+        }</ul>`;
+      }
       return `<p class="rule-para">${convertParaSegments(b.segments)}</p>`;
     }).join('');
   } else {
@@ -940,8 +969,11 @@ function renderRuleCard(rule, section, sub) {
     body.innerHTML = convertMarkdownInline(rule.body || '');
   }
 
-  // List
-  if (rule.list && rule.list.length) {
+  // List — only use the template's separate fixed-position .rule-list slot as a
+  // fallback for the rare case bodyBlocks has no items (shouldn't normally happen,
+  // since list lines always get pushed into bodyBlocks now). This avoids
+  // double-rendering the same bullets both inline and in the dedicated slot.
+  if (rule.list && rule.list.length && !bodyBlocks.some(b => b.type === 'list')) {
     const listEl = card.querySelector('.rule-list');
     listEl.hidden = false;
     rule.list.forEach(item => {

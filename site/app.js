@@ -162,13 +162,13 @@ async function loadSections() {
     '01-code-structure',
     '02-sql-best-practices',
     '03-ids-deduplication',
-    '04-data-repositories',
-    '05-concurrent-claims',
-    '06-claims-classification',
-    '07-member-enrollment',
-    '08-validation-practices',
-    '09-macro-patterns',
-    '10-provider-taxonomy',
+    '04-concurrent-claims',
+    '05-claims-classification',
+    '06-member-enrollment',
+    '07-validation-practices',
+    '08-macro-patterns',
+    '09-provider-taxonomy',
+    '10-data-repositories',
     '11-visualizations',
     '12-quick-reference',
   ];
@@ -257,7 +257,15 @@ function parseMarkdownRule(text) {
   const flushPara = () => {
     if (paraBuf.length) { bodyBlocks.push({ type: 'para', text: paraBuf.join(' ') }); paraBuf = []; }
   };
-  let callout = null, inCallout = false, calloutType = '', calloutTitle = '', calloutBody = [];
+  let callout = null, inCallout = false, calloutType = '', calloutTitle = '';
+  let calloutBlocks = [], calloutParaBuf = [], calloutListBuf = null;
+  const flushCalloutPara = () => {
+    if (calloutParaBuf.length) { calloutBlocks.push({ type: 'para', text: calloutParaBuf.join(' ') }); calloutParaBuf = []; }
+  };
+  const flushCalloutList = () => {
+    if (calloutListBuf && calloutListBuf.length) calloutBlocks.push({ type: 'list', items: calloutListBuf });
+    calloutListBuf = null;
+  };
   let inCompare = false, compareWrong = null, compareCorrect = null;
   let tipText = null, inTip = false, tipLines = [];
 
@@ -270,12 +278,33 @@ function parseMarkdownRule(text) {
       const m = line.match(/\[callout (\w+) "([^"]+)"\]/);
       calloutType = m ? m[1] : 'tip';
       calloutTitle = m ? m[2] : '';
-      calloutBody = [];
+      calloutBlocks = []; calloutParaBuf = []; calloutListBuf = null;
     } else if (line === '[/callout]') {
+      flushCalloutList();
+      flushCalloutPara();
       inCallout = false;
-      callout = { type: calloutType, title: calloutTitle, body: calloutBody.join(' ') };
+      callout = {
+        type: calloutType,
+        title: calloutTitle,
+        blocks: calloutBlocks,
+        body: calloutBlocks.filter(b => b.type === 'para').map(b => b.text).join(' '),
+      };
     } else if (inCallout) {
-      if (line.trim()) calloutBody.push(line.trim());
+      const t = line.trim();
+      if (!t) {
+        // blank line ends the current paragraph and list
+        flushCalloutList();
+        flushCalloutPara();
+      } else if (/^-\s+/.test(t)) {
+        // bullet item — close any open paragraph, then accumulate into the list
+        flushCalloutPara();
+        if (!calloutListBuf) calloutListBuf = [];
+        calloutListBuf.push(t.replace(/^-\s+/, ''));
+      } else {
+        // regular text line — close any open list, then accumulate into a paragraph
+        flushCalloutList();
+        calloutParaBuf.push(t);
+      }
 
     } else if (line === '[compare]') {
       inCompare = true;
@@ -860,10 +889,22 @@ function renderRuleCard(rule, section, sub) {
     const callout = card.querySelector('.rule-callout');
     callout.hidden = false;
     callout.className = `rule-callout callout--${rule.callout.type || 'tip'}`;
-    callout.innerHTML = `
-      <strong class="callout-title">${rule.callout.title}</strong>
-      <span class="callout-body">${convertMarkdownInline(rule.callout.body)}</span>
-    `;
+    // Text-only callouts fall back to a single body span (unchanged output);
+    // callouts with bullets render paragraphs and lists in document order.
+    const blocks = (rule.callout.blocks && rule.callout.blocks.length)
+      ? rule.callout.blocks
+      : [{ type: 'para', text: rule.callout.body || '' }];
+    let inner = `<strong class="callout-title">${rule.callout.title}</strong>`;
+    inner += blocks.map(b => {
+      if (b.type === 'list') {
+        // reuse the .rule-list class so bullets match the app's existing list styling
+        return `<ul class="callout-list rule-list">${
+          b.items.map(it => `<li>${convertMarkdownInline(it)}</li>`).join('')
+        }</ul>`;
+      }
+      return `<span class="callout-body">${convertMarkdownInline(b.text)}</span>`;
+    }).join('');
+    callout.innerHTML = inner;
   }
 
   // Tip box

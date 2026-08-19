@@ -16,7 +16,7 @@
     },
     {
       "id": "elixhauser-score",
-      "title": "Calcaulte Elixhauser Score",
+      "title": "Elixhauser Score",
       "order": 3
     }
   ]

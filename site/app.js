@@ -232,6 +232,24 @@ function parseMarkdownRules(text) {
   return parts.map(parseMarkdownRule).filter(r => r && r.title);
 }
 
+// Turn one raw source line into a paragraph segment { text, br }.
+// A "hard break" (render as <br>) is signalled by ending the line with either
+// two or more trailing spaces (standard Markdown) or a trailing backslash "\".
+function makeSegment(line) {
+  const rightTrimmed = line.replace(/\s+$/, '');
+  const hardBreak = /\s{2,}$/.test(line) || /\\$/.test(rightTrimmed);
+  const text = rightTrimmed.replace(/\\+$/, '').trim();
+  return { text, br: hardBreak };
+}
+
+// Push a source line into a paragraph buffer, honouring hard-break markers.
+// A line that is *only* a break marker just flips the previous segment's break.
+function pushSegment(buf, line) {
+  const seg = makeSegment(line);
+  if (seg.text) buf.push(seg);
+  else if (seg.br && buf.length) buf[buf.length - 1].br = true;
+}
+
 function parseMarkdownRule(text) {
   const lines = text.split('\n');
   const rule = {};
@@ -252,15 +270,16 @@ function parseMarkdownRule(text) {
   }
 
   const listItems = [], checklistItems = [], tableLines = [];
-  const bodyBlocks = [];        // ordered mix of {type:'para'} and {type:'heading'} blocks
+  // Ordered body stream: {type:'para', segments}, {type:'heading'}, {type:'callout'}.
+  const bodyBlocks = [];
   let paraBuf = [];
   const flushPara = () => {
-    if (paraBuf.length) { bodyBlocks.push({ type: 'para', text: paraBuf.join(' ') }); paraBuf = []; }
+    if (paraBuf.length) { bodyBlocks.push({ type: 'para', segments: paraBuf }); paraBuf = []; }
   };
   let callout = null, inCallout = false, calloutType = '', calloutTitle = '';
   let calloutBlocks = [], calloutParaBuf = [], calloutListBuf = null;
   const flushCalloutPara = () => {
-    if (calloutParaBuf.length) { calloutBlocks.push({ type: 'para', text: calloutParaBuf.join(' ') }); calloutParaBuf = []; }
+    if (calloutParaBuf.length) { calloutBlocks.push({ type: 'para', segments: calloutParaBuf }); calloutParaBuf = []; }
   };
   const flushCalloutList = () => {
     if (calloutListBuf && calloutListBuf.length) calloutBlocks.push({ type: 'list', items: calloutListBuf });
@@ -274,6 +293,7 @@ function parseMarkdownRule(text) {
     if (line.trimStart().startsWith('---') && line.trim() === '---') break;
 
     if (line.startsWith('[callout ')) {
+      flushPara(); // close any open body paragraph so it renders before this callout
       inCallout = true;
       const m = line.match(/\[callout (\w+) "([^"]+)"\]/);
       calloutType = m ? m[1] : 'tip';
@@ -287,8 +307,10 @@ function parseMarkdownRule(text) {
         type: calloutType,
         title: calloutTitle,
         blocks: calloutBlocks,
-        body: calloutBlocks.filter(b => b.type === 'para').map(b => b.text).join(' '),
+        body: calloutBlocks.filter(b => b.type === 'para').map(b => plainFromSegments(b.segments)).join(' '),
       };
+      // Keep the callout in document order so text written after it renders after it.
+      bodyBlocks.push({ type: 'callout', callout });
     } else if (inCallout) {
       const t = line.trim();
       if (!t) {
@@ -303,7 +325,7 @@ function parseMarkdownRule(text) {
       } else {
         // regular text line — close any open list, then accumulate into a paragraph
         flushCalloutList();
-        calloutParaBuf.push(t);
+        pushSegment(calloutParaBuf, line);
       }
 
     } else if (line === '[compare]') {
@@ -333,19 +355,23 @@ function parseMarkdownRule(text) {
       tableLines.push(line);
     } else if (/^\|[\s\-:|]+\|/.test(line)) {
       // table separator row — skip
+    } else if (!line.trim()) {
+      // Blank line in the body → end the current paragraph (starts a new one).
+      flushPara();
     } else if (/^#{3,6}\s+/.test(line)) {
       // In-body subheading (###, ####, …) — keep it as its own block, in order.
       flushPara();
       const hm = line.match(/^(#{3,6})\s+(.*)$/);
       bodyBlocks.push({ type: 'heading', level: hm[1].length, text: hm[2].trim() });
-    } else if (line.trim() && !line.startsWith('#')) {
-      paraBuf.push(line.trim());
+    } else if (!line.startsWith('#')) {
+      // Regular body text — accumulate into the current paragraph (with hard-break support).
+      pushSegment(paraBuf, line);
     }
   }
 
   flushPara();
-  rule.body = bodyBlocks.filter(b => b.type === 'para').map(b => b.text).join(' ');
-  if (bodyBlocks.some(b => b.type === 'heading')) rule.bodyBlocks = bodyBlocks;
+  rule.body = bodyBlocks.filter(b => b.type === 'para').map(b => plainFromSegments(b.segments)).join(' ');
+  if (bodyBlocks.length) rule.bodyBlocks = bodyBlocks;
   if (!rule.id) rule.id = rule.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/, '');
   if (!rule.type) rule.type = 'sop';
   if (listItems.length) rule.list = listItems;
@@ -381,6 +407,42 @@ function convertMarkdownInline(text) {
   result = result.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>');
 
   return result;
+}
+
+// Plain-text of a paragraph's segments (for search index / quick ref).
+function plainFromSegments(segments) {
+  return (segments || []).map(s => s.text).join(' ');
+}
+
+// Render paragraph segments to HTML. Soft newlines join with a space;
+// hard breaks (segment.br === true) join with a <br>.
+function convertParaSegments(segments) {
+  const segs = segments && segments.length ? segments : [{ text: '', br: false }];
+  return segs.map((s, idx) => {
+    const html = convertMarkdownInline(s.text);
+    if (idx === segs.length - 1) return html;
+    return html + (s.br ? '<br>' : ' ');
+  }).join('');
+}
+
+// Builds the inner HTML for a callout (title + ordered paragraph/list blocks).
+// Shared by the in-body block renderer and the legacy standalone-callout path.
+function renderCalloutInner(callout) {
+  const blocks = (callout.blocks && callout.blocks.length)
+    ? callout.blocks
+    : [{ type: 'para', segments: [{ text: callout.body || '', br: false }] }];
+  let inner = `<strong class="callout-title">${callout.title}</strong>`;
+  inner += blocks.map(b => {
+    if (b.type === 'list') {
+      // reuse the .rule-list class so bullets match the app's existing list styling
+      return `<ul class="callout-list rule-list">${
+        b.items.map(it => `<li>${convertMarkdownInline(it)}</li>`).join('')
+      }</ul>`;
+    }
+    const segs = b.segments || [{ text: b.text || '', br: false }];
+    return `<span class="callout-body">${convertParaSegments(segs)}</span>`;
+  }).join('');
+  return inner;
 }
 
 // ─── Search index ────────────────────────────────────────────────────────────
@@ -853,17 +915,28 @@ function renderRuleCard(rule, section, sub) {
 
   const body = card.querySelector('.rule-body');
   const bodyBlocks = rule.bodyBlocks || [];
-  if (bodyBlocks.some(b => b.type === 'heading')) {
-    // Structured render: preserve in-body ### subheadings in document order.
+  const paraCount = bodyBlocks.filter(b => b.type === 'para').length;
+  // Use the ordered block renderer when the body has anything beyond a single
+  // plain paragraph: subheadings, callouts, multiple paragraphs, or hard breaks.
+  const hasStructure = bodyBlocks.some(b => b.type === 'heading' || b.type === 'callout')
+    || paraCount > 1
+    || bodyBlocks.some(b => b.type === 'para' && (b.segments || []).some(s => s.br));
+
+  if (hasStructure) {
+    // Structured render: preserve subheadings and callouts in document order,
+    // so paragraphs written after a callout still render after it.
     body.innerHTML = bodyBlocks.map(b => {
       if (b.type === 'heading') {
         const lvl = Math.min(Math.max(b.level, 3), 6); // never emit h1/h2 inside a card
         return `<h${lvl} class="rule-subheading rule-subheading--h${lvl}">${convertMarkdownInline(b.text)}</h${lvl}>`;
       }
-      return `<p class="rule-para">${convertMarkdownInline(b.text)}</p>`;
+      if (b.type === 'callout') {
+        return `<div class="rule-callout callout--${b.callout.type || 'tip'}">${renderCalloutInner(b.callout)}</div>`;
+      }
+      return `<p class="rule-para">${convertParaSegments(b.segments)}</p>`;
     }).join('');
   } else {
-    // Unchanged behavior for cards without subheadings.
+    // Unchanged behavior for a simple single-paragraph body.
     body.innerHTML = convertMarkdownInline(rule.body || '');
   }
 
@@ -884,27 +957,13 @@ function renderRuleCard(rule, section, sub) {
     card.querySelector('.rule-body').after(tableWrap);
   }
 
-  // Callout
-  if (rule.callout) {
+  // Callout — only render standalone when it wasn't already placed inline within
+  // the body blocks above (keeps a safe fallback but avoids double-rendering).
+  if (rule.callout && !bodyBlocks.some(b => b.type === 'callout')) {
     const callout = card.querySelector('.rule-callout');
     callout.hidden = false;
     callout.className = `rule-callout callout--${rule.callout.type || 'tip'}`;
-    // Text-only callouts fall back to a single body span (unchanged output);
-    // callouts with bullets render paragraphs and lists in document order.
-    const blocks = (rule.callout.blocks && rule.callout.blocks.length)
-      ? rule.callout.blocks
-      : [{ type: 'para', text: rule.callout.body || '' }];
-    let inner = `<strong class="callout-title">${rule.callout.title}</strong>`;
-    inner += blocks.map(b => {
-      if (b.type === 'list') {
-        // reuse the .rule-list class so bullets match the app's existing list styling
-        return `<ul class="callout-list rule-list">${
-          b.items.map(it => `<li>${convertMarkdownInline(it)}</li>`).join('')
-        }</ul>`;
-      }
-      return `<span class="callout-body">${convertMarkdownInline(b.text)}</span>`;
-    }).join('');
-    callout.innerHTML = inner;
+    callout.innerHTML = renderCalloutInner(rule.callout);
   }
 
   // Tip box

@@ -10,19 +10,29 @@
       "order": 1
     },
     {
+      "id": "hashid",
+      "title": "HashID",
+      "order": 2
+    },
+    {
       "id": "studyids",
       "title": "StudyIDs",
-      "order": 2
+      "order": 3
+    },
+    {
+      "id": "pid",
+      "title": "PID",
+      "order": 4
     },
     {
       "id": "mpid",
       "title": "MPID",
-      "order": 3
+      "order": 5
     },
     {
       "id": "bpid",
       "title": "BPID",
-      "order": 4
+      "order": 6
     }
   ]
 }

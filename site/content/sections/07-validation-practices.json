@@ -2,7 +2,7 @@
   "id": "validation-practices",
   "title": "Validation Practices",
   "icon": "ti-clipboard-check",
-  "order": 7,
+  "order": 8,
   "subsections": [
     {
       "id": "how-to-validate",

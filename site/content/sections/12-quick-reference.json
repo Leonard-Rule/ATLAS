@@ -13,6 +13,11 @@
       "id": "topic-responsibilities",
       "title": "Topic Responsibilities",
       "order": 2
+    },
+    {
+      "id": "abbreviations-definitions",
+      "title": "Abbreviations and Definitions",
+      "order": 3
     }
   ]
 }

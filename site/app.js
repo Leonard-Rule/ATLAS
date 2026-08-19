@@ -251,7 +251,12 @@ function parseMarkdownRule(text) {
     i++;
   }
 
-  const bodyLines = [], listItems = [], checklistItems = [], tableLines = [];
+  const listItems = [], checklistItems = [], tableLines = [];
+  const bodyBlocks = [];        // ordered mix of {type:'para'} and {type:'heading'} blocks
+  let paraBuf = [];
+  const flushPara = () => {
+    if (paraBuf.length) { bodyBlocks.push({ type: 'para', text: paraBuf.join(' ') }); paraBuf = []; }
+  };
   let callout = null, inCallout = false, calloutType = '', calloutTitle = '', calloutBody = [];
   let inCompare = false, compareWrong = null, compareCorrect = null;
   let tipText = null, inTip = false, tipLines = [];
@@ -299,12 +304,19 @@ function parseMarkdownRule(text) {
       tableLines.push(line);
     } else if (/^\|[\s\-:|]+\|/.test(line)) {
       // table separator row — skip
+    } else if (/^#{3,6}\s+/.test(line)) {
+      // In-body subheading (###, ####, …) — keep it as its own block, in order.
+      flushPara();
+      const hm = line.match(/^(#{3,6})\s+(.*)$/);
+      bodyBlocks.push({ type: 'heading', level: hm[1].length, text: hm[2].trim() });
     } else if (line.trim() && !line.startsWith('#')) {
-      bodyLines.push(line.trim());
+      paraBuf.push(line.trim());
     }
   }
 
-  rule.body = bodyLines.join(' ');
+  flushPara();
+  rule.body = bodyBlocks.filter(b => b.type === 'para').map(b => b.text).join(' ');
+  if (bodyBlocks.some(b => b.type === 'heading')) rule.bodyBlocks = bodyBlocks;
   if (!rule.id) rule.id = rule.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/, '');
   if (!rule.type) rule.type = 'sop';
   if (listItems.length) rule.list = listItems;
@@ -370,7 +382,7 @@ function buildSearchIndex() {
         State.searchIndex.push({
           type: rule.type || 'sop',
           label: rule.title,
-          text: `${rule.title} ${rule.body || ''} ${(rule.list || []).join(' ')}`,
+          text: `${rule.title} ${rule.body || ''} ${(rule.bodyBlocks || []).filter(b => b.type === 'heading').map(b => b.text).join(' ')} ${(rule.list || []).join(' ')}`,
           nav: `${section.id}/${sub.id}`,
           section: section.title,
           subsection: sub.title,
@@ -811,7 +823,20 @@ function renderRuleCard(rule, section, sub) {
   card.querySelector('.rule-title').textContent = rule.title;
 
   const body = card.querySelector('.rule-body');
-  body.innerHTML = convertMarkdownInline(rule.body || '');
+  const bodyBlocks = rule.bodyBlocks || [];
+  if (bodyBlocks.some(b => b.type === 'heading')) {
+    // Structured render: preserve in-body ### subheadings in document order.
+    body.innerHTML = bodyBlocks.map(b => {
+      if (b.type === 'heading') {
+        const lvl = Math.min(Math.max(b.level, 3), 6); // never emit h1/h2 inside a card
+        return `<h${lvl} class="rule-subheading rule-subheading--h${lvl}">${convertMarkdownInline(b.text)}</h${lvl}>`;
+      }
+      return `<p class="rule-para">${convertMarkdownInline(b.text)}</p>`;
+    }).join('');
+  } else {
+    // Unchanged behavior for cards without subheadings.
+    body.innerHTML = convertMarkdownInline(rule.body || '');
+  }
 
   // List
   if (rule.list && rule.list.length) {

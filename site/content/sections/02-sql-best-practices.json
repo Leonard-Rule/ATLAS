@@ -2,7 +2,7 @@
   "id": "sql-best-practices",
   "title": "Proc SQL & Data Step Best Practices",
   "icon": "ti-database",
-  "order": 3,
+  "order": 2,
   "subsections": [
     {
       "id": "claim-pull-pattern",

@@ -3,6 +3,7 @@ id: health-transparency-initiative-hti
 type: reference
 
 The purpose of the HTI was created to build a centralized, statewide source of administrative healthcare data. Its goal is to make healthcare utilization, pricing, and quality metrics accessible to consumers, researchers, and policymakers to support cost control, research, and population health strategies. It was authorized under the Arkansas General Assembly Act 1233 of 2015 and expanded upon in Act 948 and Act 979 both of 2017.
+
 It contains the Arkansas All-Payer Claims Database, the medical marijuana cardholder data, the ADH birth and death records, and hospital and emergency department discharge for ONLY uninsured individuals.
 To link claims records to member enrollment records we use the NewID. To link different coverage types, such as medical and pharmacy, we use the StudyID or MPID. To link to the ADH records we use StudyID or MPID. The use of StudyID or MPID is dependent on the type of analysis.
 

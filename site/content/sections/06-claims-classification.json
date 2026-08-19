@@ -7,12 +7,17 @@
     {
       "id": "identifying-procedures",
       "title": "Identifying Procedures",
-      "order": 2
+      "order": 1
     },
     {
       "id": "professional-facility",
       "title": "Classify Professional and Facility Claims",
-      "order": 1
+      "order": 2
+    },
+    {
+      "id": "elixhauser-score",
+      "title": "Calcaulte Elixhauser Score",
+      "order": 3
     }
   ]
 }

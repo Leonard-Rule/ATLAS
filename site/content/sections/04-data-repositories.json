@@ -13,6 +13,26 @@
       "id": "healthcare-transparency-initiative",
       "title": "Healthcare Transparency Initiative (HTI)",
       "order": 2
+    },
+    {
+      "id": "ADH-data",
+      "title": "ADH Data",
+      "order": 3
+    },
+    {
+      "id": "medicare-data",
+      "title": "Medicare Data",
+      "order": 4
+    },
+    {
+      "id": "required-external-reviews",
+      "title": "Required External Reviews",
+      "order": 5
+    },
+    {
+      "id": "which-data-source",
+      "title": "Which Data Source Should We Use?",
+      "order": 6
     }
   ]
 }

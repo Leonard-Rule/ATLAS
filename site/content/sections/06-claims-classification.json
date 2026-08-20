@@ -15,9 +15,14 @@
       "order": 2
     },
     {
+      "id": "stacking-diagnosis-codes",
+      "title": "Stacking Diagnosis Codes",
+      "order": 3
+    },
+    {
       "id": "elixhauser-score",
       "title": "Elixhauser Score",
-      "order": 3
+      "order": 4
     }
   ]
 }

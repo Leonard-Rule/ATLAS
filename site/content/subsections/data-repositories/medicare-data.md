@@ -1,0 +1,5 @@
+##Medicare Data
+id: medicare-data
+type: reference
+
+We receive Medicare data from ResDAC (Research Data Assistance Center). Currently we receive two extractions one under the HDI and one under the HTI. The only difference is that the one under the HDI DUA include the name and address file. The ResDAC data layout includes the table of beneficiaries and 7 tables of claims that are specific to provider type (inpatient, outpatient, part B, pharmacy, home health, skilled nursing facilities, and hospice) and each of these tables have several other tables associated with them. In order to streamline our analyses we have developed a Medicare to APCD transformation process. Because the data contained in the ResDAC database is much richer than what is contained in the APCD layout we sometimes need to go back to the ResDAC tables, especially the bene_sum table. This table contains a lot of monthly data indicating if the beneficiary has Part C coverage (aka Medicare Advantage), the product type, if they have Part D coverage, and much more.

@@ -1,4 +1,4 @@
-##Medicare Data
+## Medicare Data
 id: medicare-data
 type: reference
 

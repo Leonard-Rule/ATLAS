@@ -1,4 +1,4 @@
-%let ssdpath = E:\SSDDRIVE\Project Name;
+%let ssdpath = E:\SSDRIVE\Project Name
 %let rpath= R:\Project Name\Data;
 
 libname ssdrive "&ssdpath";
@@ -10,17 +10,18 @@ libname mcrclms "D:\APCD claims\medicare";
 libname geoinfo "D:\GeoInfo";
 libname lookup "R:\Lookup";
 
-libname apcdlu 	ODBC noprompt = "UID=;PWD=;DSN=VIC-DATA-RES;SERVER=VIC-DATA-RES;DATABASE=APCD_ETL" SCHEMA=lookups ;
+libname apcdlu 	ODBC noprompt = "UID=;PWD=;DSN=VIC-DATA-RES.ad.uams.edu;SERVER=VIC-DATA-RES.ad.uams.edu;DATABASE=APCD_ETL" SCHEMA=lookups ;
 
-libname hdi 		ODBC  NOPROMPT="DSN=VIC-DATA-RES;SERVER=VIC-DATA-RES;DATABASE=HDI_PROD"	SCHEMA=dbo;
+libname hdi 		ODBC  NOPROMPT="DSN=VIC-DATA-RES.ad.uams.edu;SERVER=VIC-DATA-RES.ad.uams.edu;DATABASE=HDI_PROD"	SCHEMA=dbo;
 
-libname xwalk 		ODBC  NOPROMPT="DSN=VIC-DATA-RES;SERVER=VIC-DATA-RES;DATABASE=ACHI_Analytics"	SCHEMA=dbo;
+libname xwalk 		ODBC  NOPROMPT="DSN=VIC-DATA-RES.ad.uams.edu;SERVER=VIC-DATA-RES.ad.uams.edu;DATABASE=ACHI_Analytics"	SCHEMA=dbo;
 
 options compress=yes;
 options symbolgen;
 option mprint mlogic;
 
-%let mem_varis =  compress(ME001_Submitter||ME107_CarrierSpecificUniqueMembe) as newid 
+%let mem_varis =  compress(ME998_APCDUniqueId||ME013_MemberGender||ME014_MemberDateOfBirth) as studyid 
+				  , compress(ME001_Submitter||ME107_CarrierSpecificUniqueMembe) as newid
 	              , ME001_Submitter
 				  , ME002_NationalPlanId
 				  , ME003_InsuranceType_ProductCode

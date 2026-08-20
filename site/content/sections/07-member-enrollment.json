@@ -11,18 +11,23 @@
     },
     {
       "id": "payer-assignment-dental",
-      "title": "Payer Assignment (Dental)",
+      "title": "Payer Assignment (Pharmacy)",
       "order": 2
+    },
+     {
+      "id": "payer-pharmacy-snippet",
+      "title": "Payer Assignment (Dental)",
+      "order": 3
     },
     {
       "id": "race-ethnicity-sex",
       "title": "Race, Ethnicity, Sex Assignment",
-      "order": 3
+      "order": 4
     },
     {
       "id": "county-residence",
       "title": "County of Residence Assignment",
-      "order": 4
+      "order": 5
     }
   ]
 }

@@ -421,6 +421,16 @@ function convertMarkdownInline(text) {
   // Images: ![alt text](path/to/image.png) → <img src="path/to/image.png" alt="alt text" class="rule-image">
   result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="rule-image">');
 
+  // Links: [text](url) → <a href="url" target="_blank" rel="noopener">text</a>
+  result = result.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+  // Bare URLs (not already inside an href="" from the conversion above) →
+  // auto-linked. The negative lookbehind skips URLs already quoted in an
+  // href attribute we just inserted.
+  result = result.replace(/(?<!["'(])(https?:\/\/[^\s<>"]+)/g,
+    '<a href="$1" target="_blank" rel="noopener">$1</a>');
+
   // Bold: **text** → <strong>text</strong>
   result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 

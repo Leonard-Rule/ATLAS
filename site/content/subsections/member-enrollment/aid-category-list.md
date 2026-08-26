@@ -4,6 +4,10 @@ type: reference
 
 Some categories provide a full range of benefits while others may offer limited benefits or may require cost sharing by a beneficiary. The following codes describe each level of coverage.
 
+You can find the Code in ME164A_HealthPlan.
+
+For more granular subcategories, see the [MMIS Benefit Plans reference](https://humanservices.arkansas.gov/wp-content/uploads/MMIS_BenefitPlans.pdf).
+
 - FR — Full Range
 - LB — Limited Benefits
 - AC — Additional Cost Sharing

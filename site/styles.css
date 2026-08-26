@@ -470,9 +470,9 @@ button{font-family:inherit}
 .checklist-check:checked + .checklist-text{color:var(--muted); text-decoration:line-through; text-decoration-color:var(--g300)}
 
 /* ── Tables ───────────────────────────────────────────────────────────────── */
-.rule-table-wrap{margin-top:14px; overflow-x:auto; border:1px solid var(--line); border-radius:var(--r-md)}
+.rule-table-wrap{margin-top:14px; overflow-x:auto; border:1px solid var(--line-2); border-radius:var(--r-md)}
 .rule-table{width:100%; border-collapse:collapse; font-size:14px}
-.rule-table th,.rule-table td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line)}
+.rule-table th,.rule-table td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line-2)}
 .rule-table thead th{background:var(--mist); font-family:var(--f-display); font-weight:700; font-size:12px;
   text-transform:uppercase; letter-spacing:.05em; color:var(--navy-800)}
 .rule-table tbody th{font-family:var(--f-mono); font-weight:600; color:var(--navy); background:var(--g25); font-size:13px}

@@ -28,6 +28,11 @@
       "id": "county-residence",
       "title": "County of Residence Assignment",
       "order": 5
+    },
+    {
+      "id": "aid-category-list",
+      "title": "Beneficiary Aid Category List",
+      "order": 6
     }
   ]
 }

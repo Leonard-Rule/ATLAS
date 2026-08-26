@@ -85,3 +85,196 @@ For more granular subcategories, see the [MMIS Benefit Plans reference](https://
 | 95 | Guardianship (GAP) | Guardianship IV-E - User selection based on Child in Placement screen | FR |
 | 96 | Foster Care Exceptional Category | Foster Care Medically Needy Exceptional Category - Individual fails Foster Care Non-IVE Income Test and is eligible for FC EC | MNLB |
 | 97 | FC-SD Foster Care Spend Down | Foster Care Medically Needy Spend Down - Individual fails FC EC Income Test/or Income Test of any other higher category and has medical bills to be eligible on spenddown | MNLB |
+
+## Dental Benefit Plan / Aid Category Crosswalk
+id: dental-beneplan-crosswalk
+type: reference
+
+Crosswalk between the State Aid Category / Benefit Plan and the Recipient Aid Category used on dental eligibility files, with notes on the dental coverage each grants.
+
+| State Aid Category | Ben Plan | Benefit Plan Desc | Recipient Aid Category | Recipient Aid Category Desc | Note |
+|---|---|---|---|---|---|
+| 01 | AR1 | ArKids First CHIP Program | 0100 | ARKids First Program (S-CHIP) | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0101 | ARKids (S-CHIP2) | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0106 | Medicaid Eligible (S-CHIP) | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0107 | Children of public employees (S-CHIP) | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0109 | ARKids First Pgm (S-CHIP)-Tob Ind T/No CHIPRA | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0110 | ARKids First Pgm (S-CHIP)-No Tob/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0111 | ARKids First Pgm (S-CHIP)-Tob Ind T/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0112 | ARKids (S-CHIP2)-Tob Ind T/No CHIPRA | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0113 | ARKids (S-CHIP2)-No Tob/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0114 | ARKids (S-CHIP2)-Tob Ind T/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0115 | Medicaid Eligible (S-CHIP)-Tob Ind T/No CHIPRA | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0116 | Medicaid Eligible (S-CHIP)-No Tob /CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0117 | Medicaid Eligible (S-CHIP)-Tob Ind T/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0118 | Child of pub empl (S-CHIP)-Tob Ind T/No CHIPRA | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0119 | Child of pub empl (S-CHIP)-No Tob/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0120 | Child of pub empl (S-CHIP)-Tob Ind T/CHIPRA Ind C | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0121 | ARKids 1st Prog (S-CHIP)/Foster Care | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0122 | ARKids 1st Prog (S-CHIP)/Foster Care/CHIPRA | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0123 | ARKids 1st Prog (S-CHIP)/Foster Care/Tob | Dental coverage 0-18 years of age. |
+| 01 | AR1 | ArKids First CHIP Program | 0124 | ARKids 1st Prog (S-CHIP)/Foster Care/CHIPRA/Tob | Dental coverage 0-18 years of age. |
+| 03 | TITLV | TITLV (Title V) | 0300 | CMS non-Medicaid | No dental coverage. |
+| 06 | ABP | Alternative Benefit Plan | 0664 | ARHOME, FMAP P | Ages 19-20 get dental coverage. |
+| 06 | ABP | Alternative Benefit Plan | 0665 | ARHOME, FMAP S | Ages 19-20 get dental coverage. |
+| 06 | ABP | Alternative Benefit Plan | 0666 | ARHOME, FMAP C | Ages 19-20 get dental coverage. |
+| 06 | ABP | Alternative Benefit Plan | 0667 | ARHOME, FMAP I | Ages 19-20 get dental coverage. |
+| 06 | ABP | Alternative Benefit Plan | 0668 | ARHOME, FMAP Y | Ages 19-20 get dental coverage. |
+| 06 | FRAIL | Full Medicaid for Medically Frail | 0664 | ARHOME, FMAP P | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 06 | FRAIL | Full Medicaid for Medically Frail | 0665 | ARHOME, FMAP S | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 06 | FRAIL | Full Medicaid for Medically Frail | 0666 | ARHOME, FMAP C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 06 | FRAIL | Full Medicaid for Medically Frail | 0667 | ARHOME, FMAP I | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 06 | FRAIL | Full Medicaid for Medically Frail | 0668 | ARHOME, FMAP Y | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 06 | HCIP | Health Care Independence (ARHOME) | 0664 | ARHOME, FMAP P | Ages 19-20 get dental coverage. |
+| 06 | HCIP | Health Care Independence (ARHOME) | 0665 | ARHOME, FMAP S | Ages 19-20 get dental coverage. |
+| 06 | HCIP | Health Care Independence (ARHOME) | 0666 | ARHOME, FMAP C | Ages 19-20 get dental coverage. |
+| 06 | HCIP | Health Care Independence (ARHOME) | 0667 | ARHOME, FMAP I | Ages 19-20 get dental coverage. |
+| 06 | HCIP | Health Care Independence (ARHOME) | 0668 | ARHOME, FMAP Y | Ages 19-20 get dental coverage. |
+| 06 | IABP | Interim Alternative Benefit Plan | 0664 | ARHOME, FMAP P | Ages 19-20 get dental coverage. |
+| 06 | IABP | Interim Alternative Benefit Plan | 0665 | ARHOME, FMAP S | Ages 19-20 get dental coverage. |
+| 06 | IABP | Interim Alternative Benefit Plan | 0666 | ARHOME, FMAP C | Ages 19-20 get dental coverage. |
+| 06 | IABP | Interim Alternative Benefit Plan | 0667 | ARHOME, FMAP I | Ages 19-20 get dental coverage. |
+| 06 | IABP | Interim Alternative Benefit Plan | 0668 | ARHOME, FMAP Y | Ages 19-20 get dental coverage. |
+| 09 | PACE | Program for All Inclusive Care of the Elderly | 0900 | PACE | No dental coverage; PACE Recipients receive all services by and through their provider. |
+| 10 | WD | Working Disabled | 1000 | Working Disabled, >150% FPL | Under 21 get full children's dental benefit. Adult dental coverage with co-pay (see Provider Manual - section 124.230). |
+| 10 | WD | Working Disabled | 1001 | Working Disabled, >100 - 150% FPL | Under 21 get full children's dental benefit. Adult dental coverage with co-pay (see Provider Manual - section 124.230). |
+| 10 | WD | Working Disabled | 1002 | Working Disabled, up to 100% FPL | Under 21 get full children's dental benefit. Adult dental coverage with co-pay (see Provider Manual - section 124.230). |
+| 10 | WD | Working Disabled | 1003 | Working Disabled, up to 100% FPL - CHIPRA | Under 21 get full children's dental benefit. Adult dental coverage with co-pay (see Provider Manual - section 124.230). |
+| 10 | WD | Working Disabled | 1004 | Working Disabled, >100 - 150% FPL - CHIPRA | Under 21 get full children's dental benefit. Adult dental coverage with co-pay (see Provider Manual - section 124.230). |
+| 10 | WD | Working Disabled | 1005 | Working Disabled, >150% FPL - CHIPRA | Under 21 get full children's dental benefit. Adult dental coverage with co-pay (see Provider Manual - section 124.230). |
+| 11 | MLTA | Long Term Care Aged | 1100 | Aid to aged-no grant | Adult dental coverage. |
+| 13 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 1300 | Aged individual-grant (SSI) | Adult dental coverage. |
+| 14 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 1400 | Aged spouse-grant (SSI) | Adult dental coverage. |
+| 15 | PACE | Program for All Inclusive Care of the Elderly | 1500 | PACE | No dental coverage; PACE Recipients receive all services by and through their provider. |
+| 15 | PACE | Program for All Inclusive Care of the Elderly | 1501 | PACE - CHIPRA | No dental coverage; PACE Recipients receive all services by and through their provider. |
+| 16 | MNLB | Medically Needy Limited Benefit | 1600 | Aged-exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 17 | SPDN | Spend Down | 1700 | Aged-spend down case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 18 | MCAID | Full Medicaid | 1803 | AR Senior Program | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 18 | QMB | Qualified Medicare Beneficiary | 1800 | Aged-qualified Medicare beneficiary | No dental coverage; Pays Medicare buy-in, deductibles and co-insurance. |
+| 19 | MCAID | Full Medicaid | 1900 | AR Seniors | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 20 | PCR | Parent/Caretaker Relative | 2000 | AFDC grant/Parent Caretaker Relative | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 20 | PCR | Parent/Caretaker Relative | 2006 | AFDC grant/Parent Caretaker Relative - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 25 | MCAID | Full Medicaid | 2500 | Transitional Medicaid adult | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 25 | MCAID | Full Medicaid | 2502 | Trans Medicaid adult-Tob Ind T/No CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 25 | MCAID | Full Medicaid | 2503 | Trans Medicaid adult-No Tob/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 25 | MCAID | Full Medicaid | 2504 | Trans Medicaid adult-Tob Ind T/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 26 | MNLB | Medically Needy Limited Benefit | 2600 | AFDC exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 26 | MNLB | Medically Needy Limited Benefit | 2603 | AFDC exceptional case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 27 | SPDN | Spend Down | 2700 | AFDC spend down case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 27 | SPDN | Spend Down | 2702 | AFDC spend down case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 31 | MLTB | Long Term Care Blind/Pickle | 3100 | Eligible under Pickle Amendment | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 31 | MLTB | Long Term Care Blind/Pickle | 3102 | Eligible under Pickle Amendment - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 33 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 3300 | Blind individual (SSI)-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 33 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 3301 | Blind individual (SSI)-no grant  CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 34 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 3400 | Blind spouse-grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 34 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 3401 | Blind spouse-grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 35 | SSICH | Medicaid thru Supplemental Security Income-Child | 3500 | Blind child-grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 35 | SSICH | Medicaid thru Supplemental Security Income-Child | 3501 | Blind child-grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 36 | MNLB | Medically Needy Limited Benefit | 3600 | Blind exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 36 | MNLB | Medically Needy Limited Benefit | 3601 | Blind exceptional case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 37 | SPDN | Spend Down | 3700 | Blind spenddown case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 37 | SPDN | Spend Down | 3701 | Blind spenddown case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 38 | QMB | Qualified Medicare Beneficiary | 3800 | Blind-qualified Medicare beneficiary | No dental coverage; Pays Medicare buy-in, deductibles and co-insurance. |
+| 40 | MLTA | Long Term Care Aged | 4000 | Nursing Facility, Aged | Adult dental coverage. |
+| 40 | MLTB | Long Term Care Blind/Pickle | 4001 | Nursing Facility, Blind | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 40 | MLTB | Long Term Care Blind/Pickle | 4003 | Nursing Facility, Blind - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 40 | MLTD | Long Term Care Disabled | 4002 | Nursing Facility, Disabled | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 40 | MLTD | Long Term Care Disabled | 4004 | Nursing Facility, Disabled - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 41 | MLTD | Long Term Care Disabled | 4100 | Aid to the disabled-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 41 | MLTD | Long Term Care Disabled | 4103 | Aid to the disabled-no grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 43 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 4300 | Disabled individual (SSI)-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 43 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 4302 | Disabled individual (SSI)-no grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 44 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 4400 | Disabled spouse (SSI)-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 44 | SSIAD | Medicaid thru Supplemental Security Income-Adult | 4402 | Disabled spouse (SSI)-no grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 45 | SSICH | Medicaid thru Supplemental Security Income-Child | 4500 | Disabled child (SSI)-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 45 | SSICH | Medicaid thru Supplemental Security Income-Child | 4503 | Disabled child (SSI)-no grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 46 | MNLB | Medically Needy Limited Benefit | 4600 | Disabled-exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 46 | MNLB | Medically Needy Limited Benefit | 4603 | Disabled-exceptional case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 47 | SPDN | Spend Down | 4700 | Disabled-spenddown case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 47 | SPDN | Spend Down | 4703 | Disabled-spenddown case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 48 | QMB | Qualified Medicare Beneficiary | 4800 | Disabled-qualified Medicare beneficiary | No dental coverage; Pays Medicare buy-in, deductibles and co-insurance. |
+| 49 | TEFRA | Disabled Child-TEFRA | 4900 | Disabled child-TEFRA | Under 21 get full children's dental benefit. |
+| 49 | TEFRA | Disabled Child-TEFRA | 4901 | Disabled child-TEFRA - CHIPRA | Under 21 get full children's dental benefit. |
+| 51 | MCAID | Full Medicaid | 5100 | Under age 18-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 51 | MCAID | Full Medicaid | 5101 | Under age 18-no grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 52 | MCAID | Full Medicaid | 5200 | Newborn | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 52 | MCAID | Full Medicaid | 5202 | Newborn-Tob Ind T/No CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 52 | MCAID | Full Medicaid | 5203 | Newborn-No Tob/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 52 | MCAID | Full Medicaid | 5204 | Newborn-Tob Ind T/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 56 | MNLB | Medically Needy Limited Benefit | 5600 | Under age 18-exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 57 | SPDN | Spend Down | 5700 | Under age 18-spend down | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 57 | SPDN | Spend Down | 5701 | Under age 18-spend down - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 58 | QI-1 | Qualified Individual 1-Disabled | 5800 | Qualified Individual 1-disabled | No dental coverage. |
+| 61 | PWUCH | Pregnant Women - Unborn Child | 6109 | Pregnant women unborn child (S-CHIP) | No dental coverage - unless pregnancy related. |
+| 61 | PWUCH | Pregnant Women - Unborn Child | 6129 | PW unborn child (S-CHIP)-Tob Ind T/No CHIPRA | No dental coverage - unless pregnancy related. |
+| 61 | PWUCH | Pregnant Women - Unborn Child | 6130 | PW unborn child (S-CHIP)-No Tob/CHIPRA Ind C | No dental coverage - unless pregnancy related. |
+| 61 | PWUCH | Pregnant Women - Unborn Child | 6131 | PW unborn child (S-CHIP)-Tob Ind T/CHIPRA Ind C | No dental coverage - unless pregnancy related. |
+| 61 | SOCH | SOBRA Child | 6100 | Pregnant women-poverty level/SOBRA child | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6106 | SOBRA Child (M-CHIP) | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6107 | SOBRA Newborn | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6113 | SOBRA Child, Aid Cat Indicator K | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6117 | SOBRA Child, Aid Cat Ind K-Tob Ind T/No CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6118 | SOBRA Child, Aid Cat Ind K-No Tob/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6119 | SOBRA Child, Aid Cat Ind K-Tob Ind T/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6123 | SOBRA Child (M-CHIP)-Tob Ind T/No CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6124 | SOBRA Child (M-CHIP)-No Tob/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6125 | SOBRA Child (M-CHIP)-Tob Ind T/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6135 | SOBRA Newborn-Tob Ind T/No CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6136 | SOBRA Newborn-No Tob/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6137 | SOBRA Newborn-Tob Ind T/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6138 | SOBRA Child (M-CHIP)/FosterCare | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6139 | SOBRA Child (M-CHIP)/FosterCare/CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6140 | SOBRA Child (M-CHIP)/FosterCare/Tob | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6141 | SOBRA Child (M-CHIP)/FosterCare/CHIPRA/Tob | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6142 | SOBRA Child, Ind K/FosterCare | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6143 | SOBRA Child, Ind K/FosterCare/CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6144 | SOBRA Child, Ind K/FosterCare/Tob | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 61 | SOCH | SOBRA Child | 6145 | SOBRA Child, Ind K/ FosterCare/CHIPRA/Tob | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 62 | PWPE | Presumptive Eligibility for Pregnant Women | 6200 | Pregnant women adult-presumptive eligibility | Ages 19-20 get full children's dental benefit. 21+ get adult dental benefit if pregnancy related. |
+| 62 | PWPE | Presumptive Eligibility for Pregnant Women | 6203 | Preg women adult-presumptive eligibility - CHIPRA | Ages 19-20 get full children's dental benefit. 21+ get adult dental benefit if pregnancy related. |
+| 62 | PWPE | Presumptive Eligibility for Pregnant Women | 6204 | Preg women adult-presumptive eligibility - Tobacco | Ages 19-20 get full children's dental benefit. 21+ get adult dental benefit if pregnancy related. |
+| 62 | PWPE | Presumptive Eligibility for Pregnant Women | 6205 | Preg women adult-presumptive elig - CHIPRA/Tobacco | Ages 19-20 get full children's dental benefit. 21+ get adult dental benefit if pregnancy related. |
+| 65 | MCAID | Full Medicaid | 6500 | Pregnant women-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 65 | MCAID | Full Medicaid | 6503 | Pregnant women-no grant-No Tob/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 65 | MCAID | Full Medicaid | 6504 | Pregnant women-no grant-Tob Ind T/No CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 65 | MCAID | Full Medicaid | 6505 | Pregnant women-no grant-Tob Ind T/CHIPRA Ind C | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 66 | MNLB | Medically Needy Limited Benefit | 6600 | Pregnant women-exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 66 | MNLB | Medically Needy Limited Benefit | 6601 | Pregnant women-exceptional case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 67 | SPDN | Spend Down | 6701 | Pregnant women-spenddown case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 67 | SPDN | Spend Down | 6702 | Pregnant women-spenddown case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 68 | QDWI | Qualified Disabled Working Individuals | 6800 | Qualified Disabled Working Individuals | No dental coverage. |
+| 76 | MNLB | Medically Needy Limited Benefit | 7600 | Unemployed parent-exceptional case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 76 | MNLB | Medically Needy Limited Benefit | 7603 | Unemployed parent-exceptional case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 77 | SPDN | Spend Down | 7700 | Unemployed parent-spenddown case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 77 | SPDN | Spend Down | 7701 | Unemployed parent-spenddown case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 81 | MCAID | Full Medicaid | 8100 | Refugee resettlement-no grant | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 81 | MCAID | Full Medicaid | 8101 | Refugee resettlement-no grant - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 87 | SPDN | Spend Down | 8700 | Refugee resettlement-spenddown case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 87 | SPDN | Spend Down | 8701 | Refugee resettlement-spenddown case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 88 | SLMB | Specified Low-income Medicare Beneficiaries | 8800 | Special low income-qualified Medicare beneficiary | No dental coverage; Pays Medicare buy-in only. |
+| 91 | MCAID | Full Medicaid | 9100 | Foster Care Non-IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 91 | MCAID | Full Medicaid | 9102 | Adopted Child | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 91 | MCAID | Full Medicaid | 9103 | Adopted Child | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 91 | MCAID | Full Medicaid | 9104 | Foster Care Non-IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 92 | MCAID | Full Medicaid | 9200 | Foster Care IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 92 | MCAID | Full Medicaid | 9201 | Foster Care ICPC IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 92 | MCAID | Full Medicaid | 9202 | Foster Care IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 92 | MCAID | Full Medicaid | 9203 | Foster Care ICPC IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 93 | MCAID | Full Medicaid | 9300 | Former Foster Care | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 93 | MCAID | Full Medicaid | 9301 | Former Foster Care - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9400 | Adoption IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9401 | Adoption non IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9402 | Adoption ICAMA IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9403 | Adoption ICAMA non IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9404 | Adoption IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9405 | Adoption non IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9406 | Adoption ICAMA IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 94 | MCAID | Full Medicaid | 9407 | Adoption ICAMA non IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 95 | MCAID | Full Medicaid | 9500 | Guardianship IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 95 | MCAID | Full Medicaid | 9501 | Guardianship non IV-E | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 95 | MCAID | Full Medicaid | 9502 | Guardianship IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 95 | MCAID | Full Medicaid | 9503 | Guardianship non IV-E - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 96 | MNLB | Medically Needy Limited Benefit | 9600 | Foster care-exceptional case | ARKids-A dental benefit for under 21. |
+| 96 | MNLB | Medically Needy Limited Benefit | 9601 | Foster care-exceptional case - CHIPRA | ARKids-A dental benefit for under 21. |
+| 97 | SPDN | Spend Down | 9700 | Foster care-spenddown case | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
+| 97 | SPDN | Spend Down | 9701 | Foster care-spenddown case - CHIPRA | Under 21 get full children's dental benefit. 21+ get adult dental benefit. |
